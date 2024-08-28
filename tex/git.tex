@@ -1,0 +1,160 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\begin{document}
+	
+{\Huge Git}
+
+\section{Введение}
+
+\subsection{Настройки}
+
+Сохранить локальные настройки: \\
+\indent \texttt{\$git config user.name <user\_name>} \\
+\indent \texttt{\$git config user.email <user\_email>} \\
+
+\noindent Варианты настроек: \\
+\indent \texttt{\$git config {-}-system \ldots \indent \#} Системные: /etc/git/config \\
+\indent \texttt{\$git config {-}-global \ldots \indent \#} Пользователя: ~/.gitconfig \\
+\indent \texttt{\$git config {-}-local \ldots \indent \#}  Проекта (default):	<project>/.git/config \\
+
+\noindent\texttt{\$git config {-}-list \indent \#} - все конфигурационные параметры \\
+\texttt{\$git config {-}-unset user.name \indent \#} - сбросить параметр \\ 
+\texttt{\$git config {-}-remove-section user \indent \#} - удалить секцию \\ 
+\texttt{\$git config {-}-global core.editor \ldots \indent \#} редактор для commit \\
+	
+\noindent Алиасы, пример: \\
+\indent\texttt{\$git config {-}-global alias.c 'config {-}-global'} \\
+\indent\texttt{\$git c {-}-list}
+
+
+\subsection{Простые команды}
+
+\texttt{\$git init \indent \#} - инициализация каталога проекта \\
+\texttt{\$git status \indent \#} - текущий статус \\
+\texttt{\$git add <file> \indent \#} - добавить файл в индекс \\
+Сделать commit:\\
+\indent\texttt{\$git commit \indent \#} - запустится редактор для ввода комментария \\
+\indent\texttt{\$git commit -m <comment>} \\
+\texttt{\$git add {-}- chmod=+x <file> \indent \#} - сделать файл исполняемым \\
+	
+\noindent Специальные файлы:\\
+\indent.gitignore \indent - содержит список игнорируемых файлов \\
+\indent.gitkeep \indent - в пустых каталогах, тогда они добавляются в индекс\\
+
+\noindent\texttt{\$git reset HEAD <file> \indent \#} - убрать изменения в файле \\
+\texttt{\$git  add -f <file> \indent \#} - добавить файл из игнорируемого каталога\\
+	
+
+\texttt{\$git add -p <file> \indent \#} - с вопросом по каждому изменению \\
+
+\noindent Добавление всех изменений сразу в commit:\\
+\indent \texttt{\$git commit -all \indent} \\
+\indent \texttt{\$git commit -am <comment>} \\
+\indent \texttt{\$git commit -m <comment> file1 file2 \ldots" \#} - несколько файлов \\
+
+\noindent Удалить файл: \\
+\indent \texttt{\$git rm <file> \indent \#} - удаление из каталога и индекса \\
+\indent \texttt{\$git rm -r <file> \indent \#} - удаление из каталога\\
+\indent \texttt{\$git rm {-}-cached <file> \indent \#} - удаление из индекса \\
+\indent \texttt{\$git rm -f <file> \indent \#} - удаление с несохраненными изменениями\\
+
+\noindent Переименовать файл:\\
+\indent \texttt{\$git mv <old\_name> <new\_name>}
+
+\section{Удаление изменений}
+
+\texttt{\$git checkout -f \indent \#} - удалить все изменения \\
+\texttt{\$git checkout -f file \indent \#} - удалить изменения в файле \\
+\texttt{\$git reset --hard \indent \#}  - сброс изменений \\
+\texttt{\$git clean -dxf \indent \#} - очистка от изменений \\
+\indent -d - директории \\
+\indent -x - файлы которые не отслеживаются \\
+
+
+\section{Ветки}
+
+Работа с ветками: \\
+\indent \texttt{\$git branch -v \indent \#} - список веток с краткой информацией\\
+\indent \texttt{\$git branch <name> \indent \#} - создать новую ветку \\
+\indent \texttt{\$git checkout <name> \indent \#} - переключиться на ветку\\
+\indent \texttt{\$git checkout -b <name> \indent \#} = create + checkout \\
+
+\noindent Изменения в ветках: \\
+
+\indent \texttt{\$git stash \indent \#} - убрать все изменения и запомнить \\
+\indent \texttt{\$git stash pop \indent \#} - вернуть запомненные изменения \\
+
+\noindent Сделать новую ветку указывающую на commit:\\
+\indent \texttt{\$git branch <name> <commit>}  \\
+Передвинуть ветку на commit (или другую ветку):  \\
+\indent \texttt{\$git branch -f <name> <commit|branch>} \\ 
+\indent \texttt{\$git checkout -B <name> <commit> \indent \#}  = \texttt{git branch -f}  + \texttt{git checkout} \\
+Передвинуться на commit:\\
+\indent \texttt{\$git checkout <commit>} \\
+
+
+\noindent Cкопировать commit на текущую ветку: \\
+\indent \texttt{\$git cherry-pick <commit>}   \\
+
+\noindent Восстановить версии файлов из commit:\\
+\indent \texttt{\$git checkout <commit> <filenames>} \\
+Сбросить индекс для файла: \\
+\indent \texttt{\$git reset <filename>} \\
+Вернуть файл из repository: \\
+\indent \texttt{\$git checkout HEAD <filename>}  \\
+Вернуть файл из индекса: \\
+\indent \texttt{\$git checkout <filename>}  \\
+
+\noindent Просмотр истории: \\
+\indent \texttt{\$git log {-}-oneline} \\
+\indent \texttt{\$git log <branch> {-}-oneline} \\
+\indent \texttt{\$git show <commit>} \\
+\indent \texttt{\$git show HEAD\~  \indent \#} - родитель commit \\
+\indent \indent \texttt{HEAD\~{}\~{}\~{} = HEAD\~{}3}  \\
+\indent \indent \texttt{HEAD = @}  \\
+
+\noindent Показать содержимое файла из commit: \\
+\indent \texttt{\$git show <commit>:<filename>} \\
+\noindent Найти commit по строке: \\
+\indent \texttt{\$git show <commit>:/<string>} \\
+
+\noindent Выполнить merge master и branch, используется Fast-Forward: \\
+\indent \texttt{\$git merge <branch>} \\
+
+\noindent Продвинуть ветку: \\
+\indent \texttt{\$git branch -f <branch> <commit> \indent \#} - на commit   \\
+\indent \texttt{\$git branch -f <branch> ORIG\_HEAD \indent \#} - на предыдующий HEAD  \\
+
+\noindent Удаление ветки: \\
+\indent \texttt{\$git branch -d <branch> \indent \#} -только если объединение с текущей \\
+\indent \texttt{\$git branch -D <branch> \indent \#} - если в ней есть отличные commit \\
+
+\noindent Восстановить удаленную ветку: \\
+\indent \texttt{\$git branch <branch> <commit>} \\
+
+
+\section{Reference logs}
+
+\texttt{\$cat .git/logs/HEAD} \\
+\texttt{\$git reflog} \\
+\texttt{\$git reflog <branch>} \\
+\texttt{\$git reflog} \indent  алиас для \indent \texttt{\$git log {-}-oneline -g} \\
+\texttt{\$git reflog {-}-date=iso} \\
+
+\section{XXXXXXXXXXXXXXXXXXXXXXXX}
+
+
+
+\section{Отмена commit}
+\texttt{\$git revert <commit> \#} - создает commit отменяющий изменения в <commit> \\
+\texttt{\$git revert <commit> -m 1 \indent \#}  - отмена commit слияния \\
+
+	
+\end{document}
