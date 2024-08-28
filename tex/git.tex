@@ -112,11 +112,11 @@
 \noindent Восстановить версии файлов из commit:\\
 \indent \texttt{\$git checkout <commit> <filenames>} \\
 Сбросить индекс для файла: \\
-\indent \texttt{\$git reset <filename>} \\
+\indent \texttt{\$git reset <file>} \\
 Вернуть файл из repository: \\
-\indent \texttt{\$git checkout HEAD <filename>}  \\
+\indent \texttt{\$git checkout HEAD <file>}  \\
 Вернуть файл из индекса: \\
-\indent \texttt{\$git checkout <filename>}  \\
+\indent \texttt{\$git checkout <file>}  \\
 
 \noindent Просмотр истории: \\
 \indent \texttt{\$git log {-}-oneline} \\
@@ -127,7 +127,7 @@
 \indent \indent \texttt{HEAD = @}  \\
 
 \noindent Показать содержимое файла из commit: \\
-\indent \texttt{\$git show <commit>:<filename>} \\
+\indent \texttt{\$git show <commit>:<file>} \\
 \noindent Найти commit по строке: \\
 \indent \texttt{\$git show <commit>:/<string>} \\
 
@@ -136,7 +136,7 @@
 
 \noindent Продвинуть ветку: \\
 \indent \texttt{\$git branch -f <branch> <commit> \indent \#} - на commit   \\
-\indent \texttt{\$git branch -f <branch> ORIG\_HEAD \indent \#} - на предыдующий HEAD  \\
+\indent \texttt{\$git branch -f <branch> ORIG\_HEAD \indent \#} - на предыдущий HEAD  \\
 
 \noindent Удаление ветки: \\
 \indent \texttt{\$git branch -d <branch> \indent \#} -только если объединение с текущей \\
@@ -218,7 +218,7 @@
 \indent \texttt{\$git diff {-}-name-only <commit1> <commit2>}\\
 \noindent Сравнить разные файлы из разных commit: \\
 \indent \texttt{\$git diff <commit1>:<file1> <commit2>:<file2>} \\
-\noindent Сравнть 2 произвольных файла без привязки к git: \\
+\noindent Сравнить 2 произвольных файла без привязки к git: \\
 \indent \texttt{\$git diff {-}-no-index <file1> <file2>} \\
 
 
@@ -297,12 +297,12 @@
 
 \noindent Вернуть в состоянии до merge: \\
 \indent \texttt{\$git reset {-}-hard} \\
-\noindent Оставить которые хорошо объединились, проблемные вернуть в начальное состояни: \\
+\noindent Оставить которые хорошо объединились, проблемные вернуть в начальное состояние: \\
 \indent \texttt{\$git reset {-}-merge} \\
 
 \noindent \texttt{\$git checkout {-}-conflict-diff3 {-}-merge <file>} \\
 
-\noindent После окочания разрешения конфликтов создает окончательный commit слияния: \\
+\noindent После окончания разрешения конфликтов создает окончательный commit слияния: \\
 \indent \texttt{\$git merge {-}-continue}
 
 \noindent id сливаемого commit в .git/MERGE\_HEAD \\
@@ -353,7 +353,7 @@
 \indent\texttt{\$git rebase {-}-skip } \\
 
 
-\noindentПродолжить после разрешение конфликта: \\
+\noindent Продолжить после разрешение конфликта: \\
 \indent\texttt{\$git rebase {-}-continue } \\
 Узнать id ветки до предыдущего состояния: \\ 
 \indent\texttt{\$cat .git/ORIG\_HEAD } \\
@@ -374,7 +374,7 @@
 \indent\texttt{\$git add \ldots} \\
 \indent\texttt{\$git commit {-}-amend {-}-no-edit} \\
 
-\noindent Перенос всех commit в ветку branch из текущей ветки начинся с <commit>: \\
+\noindent Перенос всех commit в ветку branch из текущей ветки начиная с <commit>: \\
 \indent \texttt{\$git rebase {-}-onto <branch> <commit>}  \\
 
 \noindent Скопировать 2 последних commit: \\
