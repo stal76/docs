@@ -1,15 +1,21 @@
 \documentclass[12pt, a4paper]{article}
-\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[english,russian]{babel}
+\usepackage[russian]{babel}
+\usepackage{cmap}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{makeidx}
 \usepackage{graphicx}
+\usepackage{hyperref}
+
 \begin{document}
-	
-{\Huge Git}
+		
+\begin{center} {\Huge Git - справка} \end{center}
+
+Составлено по материалам 
+\href{https://www.youtube.com/watch?v=W4hoc24K93E&list=PLDyvV36pndZFHXjXuwA_NywNrVQO0aQqb}{курса} от JavaScript.ru \\
+
 
 \section{Введение}
 
@@ -148,7 +154,251 @@
 \texttt{\$git reflog} \indent  алиас для \indent \texttt{\$git log {-}-oneline -g} \\
 \texttt{\$git reflog {-}-date=iso} \\
 
-\section{XXXXXXXXXXXXXXXXXXXXXXXX}
+
+\section{Reset}
+
+\noindent Сброс (по умолчанию mix): \\
+\indent \texttt{\$git reset {-}-hard <commit> \indent\#} - Жесткий сброс \\
+\indent \texttt{\$git reset {-}-mix <commit> \indent\#} - Смешанный сброс \\
+\indent \texttt{\$git reset {-}-soft <commit> \indent\#} - Мягкий сброс \\
+\indent \indent 	\texttt{@ \indent} - последний commit \\
+\indent \indent 	\texttt{@\~ \indent} - предыдущий commit \\
+
+Отличия видов reset (из \texttt{\$git reset {-}{-}help}): \\
+
+\texttt {
+\begin{tabular}{c c c c l c c c}
+	working & index & HEAD & target &  & working & index & HEAD \\
+	\hline
+	A & B & C & D & {-}{-}soft & A & B & D \\
+	 &  & & & {-}{-}mixed & A & D & D \\
+	 &  & & & {-}{-}hard & D & D & D \\
+\end{tabular}
+}
+
+
+\noindent \texttt{\$git reflog master} \\
+
+\noindent Взять комментарий из другого commit: \\
+\indent \texttt{\$git commit -c <commit> \indent\#} - откроется редактор  \\
+\indent \texttt{\$git commit -C <commit> \indent\#} - не будет открываться редактор \\
+\indent \indent \texttt{ {-}-reset-author \indent} - сбросить автора (по умолчанию из commit) \\
+
+\noindent \texttt{\$git commit {-}-amend \indent\#}  - исправить в последнем commit \\
+\indent \texttt{ {-}-no-edit\indent\#} - не открывать редактор \\ 
+\indent \texttt{ {-}-reset-author} \\
+
+\noindent Очистка индекса от всех изменений: \\
+\indent \texttt{\$git reset HEAD} \\
+\noindent Удалить изменения по файлу в индексе \\
+\indent \texttt{\$git reset <file>} \\
+\noindent Поместить файл из commit в индекс (в директории не меняется):\\
+\indent \texttt{\$git reset <commit> <file>} \\
+
+
+\section{Просмотр изменений}
+
+\noindent \texttt{\$git diff <commit1> <commit2>} \\
+\noindent \texttt{\$git diff <commit1>..<commit2>} \\
+
+\noindent Что изменилось в branch2 с момента отделение от ветки branch1: \\
+\indent \texttt{\$git diff <branch1>...<branch2>} \\
+\noindent Изменения в директории с момента последнего commit: \\
+\indent \texttt{\$git diff HEAD} \\
+\noindent \texttt{\$git diff} - Изменения по сравнению с индексом \\
+\noindent \texttt{\$git diff {-}-cached} - Изменения индекса с последним commit \\
+
+\noindent При commit в редакторе показывать изменения: \\
+\indent \texttt{\$git commit -v} \\
+\noindent Включить автоматическое отображение изменений при commit: \\
+\indent \texttt{\$git config {-}-global commit.verbose true} \\
+
+\noindent \texttt{\$git diff <file>} - Изменения в файле \\
+\noindent Только имена изменившихся файлов: \\
+\indent \texttt{\$git diff {-}-name-only <commit1> <commit2>}\\
+\noindent Сравнить разные файлы из разных commit: \\
+\indent \texttt{\$git diff <commit1>:<file1> <commit2>:<file2>} \\
+\noindent Сравнть 2 произвольных файла без привязки к git: \\
+\indent \texttt{\$git diff {-}-no-index <file1> <file2>} \\
+
+
+
+\section{Просмотр истории}
+
+\noindent \texttt{\$git log \indent\#} - Вывод истории commit достижимых из HEAD \\
+\noindent \texttt{\$git log {-}-pretty=<value>} \\
+\indent \texttt{medium (default)} \\
+\indent\texttt{oneline} \\
+\indent\texttt{format:'\%h \%cd | \%s\%d [\%an]' }  - id, date | comment ссылки автор \\
+\indent\indent\texttt{\%C(<colorname)\indent} - задать цвет \\
+
+
+	\indent \texttt{{-}-abbrev-commit \indent\#} - обрезать id commit \\
+\noindent \texttt{\$git log {-}-oneline}  = \texttt{\$git log {-}-pretty=oneline {-}-abbrev-commit} \\
+\indent \texttt{{-}-decorate-short} \\
+\indent \texttt{{-}-date=short \indent\#} - только даты \\
+\indent \texttt{{-}-date=format:'\%F \%R' \indent\#}  - берет флаги из strftime \\
+
+\noindent \texttt{\$git log <branch> \indent\#}  - log по commit достижимым из ветки \\
+\indent \texttt{{-}-graph \indent\#} - в виде дерева \\
+\indent \texttt{{-}-all \indent\#} - из всех commit \\
+
+\noindent \texttt{\$git log gui} \\
+\noindent \texttt{\$git log feature {$ \mathbin{\char`\^} $}master \indent\#} - log по feature кроме master \\
+\noindent \texttt{\$git log master..feature} \\
+\indent \texttt{{-}-boundary \indent\#} - включая пограничный commit \\
+
+
+\noindent \texttt{\$git log ..feature} - симметрическая разница \\
+
+\noindent \texttt{\$git log <file>} - история по файлу \\
+\indent \texttt{-p} - показывать различия \\
+\indent \texttt{{-}-follow} - если был переименован, то и по старым названиям \\
+
+\noindent История между commit по списку файлов: \\
+\indent \texttt{\$git log <commit1>..<commit2> <file1> <file2> ...} \\
+
+\noindent Поиск по строке по commit достижимым из HEAD: \\
+\indent \texttt{\$git log {-}-grep <string>}\\
+\noindent \texttt{\$git log {-}-grep <str1> {-}-grep <str2> \#} - str1 или str2 в сообщении \\
+\indent \indent \texttt{{-}-all-match \indent} - по всем совпадение \\
+\indent \indent \texttt{-p \indent} - Perl type совместимые регулярные выражения \\
+\indent \indent \texttt{-F \indent} - отключить регулярные выражения \\
+\indent \indent \texttt{-i \indent} - регистро-независимый поиск \\
+
+\noindent Поиск по содержимому: \\
+\indent \texttt{\$git log -G <string>}\\
+\noindent Все изменения со строки i1 по i2 в <file>: \\
+\indent \texttt{\$git log -L i1,i2:<file>}\\
+\noindent Регулярные выражения для начала и конца фрагмента: \\
+\indent \texttt{\$git log -L r1,r2:<file> - r1,r2}\\
+\noindent Регулярное выражение <func> для имени функции: \\
+\indent \texttt{\$git log :<func>:<file>} \\
+
+\noindent \texttt{\$git log}: \\
+\indent \texttt{{-}-author} \\
+\indent \texttt{{-}-commiter} \\
+\indent \texttt{{-}-before 'before 3 months'} \\
+\indent \texttt{{-}-after} \\
+
+\noindent \texttt{\$git blame <file> \indent\#} - кто менял строки файла \\
+
+
+
+\section{Слияние}
+
+\noindent \texttt{\$git merge <branch> \indent\#} - объединить ветки \\
+
+\noindent При конфликте взять версию файла: \\
+\indent \texttt{\$git checkout {-}-ours <file> \indent\#} - из текущей ветки  \\
+\indent \texttt{\$git checkout {-}-theirs <file> \indent\#} - из объединяемой ветки \\
+
+\noindent \texttt{\$git checkout {-}-merge} \\
+
+\noindent Вернуть в состоянии до merge: \\
+\indent \texttt{\$git reset {-}-hard} \\
+\noindent Оставить которые хорошо объединились, проблемные вернуть в начальное состояни: \\
+\indent \texttt{\$git reset {-}-merge} \\
+
+\noindent \texttt{\$git checkout {-}-conflict-diff3 {-}-merge <file>} \\
+
+\noindent После окочания разрешения конфликтов создает окончательный commit слияния: \\
+\indent \texttt{\$git merge {-}-continue}
+
+\noindent id сливаемого commit в .git/MERGE\_HEAD \\
+
+\noindent Отмена слияния: \\
+\indent \texttt{\$git reset {-}-hard {@}\~} \\
+
+\noindent Слияние без автоматического commit: \\
+\indent \texttt{\$git merge <branch> {-}-no-commit} \\
+
+\noindent Слияние без Fast Forward (перемотки), создается новый commit: \\
+\indent \texttt{\$git merge {-}-no-ff {-}-no-edit <commit>} \\
+
+\noindent Слияние без сохранения истории сливаемого commit: \\
+\indent \texttt{\$git merge {-}-squash <commit>} \\
+
+
+
+
+
+\section{Копирование commit}
+
+\texttt{\$git cherry-pick <commit> \indent\#} - скопировать на текущую ветку \\
+\indent\texttt{-x} - добавить строку с информацией откуда скопирован commit \\
+
+\noindent Скопировать все commit из <commit2> в <commit1> с момента разделения: \\
+\indent\texttt{\$git cherry-pick <commit1>..<commit2>}\\
+
+\noindent При возникновении конфликта: \\
+\indent\texttt{\$git cherry-pick {-}-abort \indent\#} - отмена \\
+\indent\texttt{\$git cherry-pick {-}-continue \indent\#} - продолжить \\
+\indent\texttt{\$git cherry-pick {-}-quit \indent\#} - оставить только успешно скопированные \\
+
+\noindent Скопировать без создания commit \\
+\indent\texttt{\$git cherry-pick {-}-no-commit <commit>} \\
+
+
+
+\section{Перенос веток}
+
+Чтобы текущая ветка начиналась с последнего commit в <commit>: \\
+\indent\texttt{\$git rebase <commit>} \\
+Полностью отказаться, если были неразрешенные конфликты: \\
+\indent\texttt{\$git rebase {-}-abort} \\
+Остаться в текущем незавершенном состоянии: \\
+\indent\texttt{\$git rebase {-}-quit}  \\
+Пропустить все изменения из текущего проблемного commit и продолжить дальше: \\
+\indent\texttt{\$git rebase {-}-skip } \\
+
+
+\noindentПродолжить после разрешение конфликта: \\
+\indent\texttt{\$git rebase {-}-continue } \\
+Узнать id ветки до предыдущего состояния: \\ 
+\indent\texttt{\$cat .git/ORIG\_HEAD } \\
+Просмотр изменений по ветке: \\
+\indent\texttt{\$git reflog <branch> -1}  \\
+Просмотр информации по последнему commit: \\
+\indent\texttt{\$git show {-}-quiet <branch>{@}\{1\}} \\ 
+Вернуться на состояние последнего commit: \\
+\indent\texttt{\$git reset {-}-hard <commit>{@}\{1\}} \\ 
+
+
+\noindent\texttt{\$git rebase <commit1> <commit2>} = \\
+\indent\indent \texttt{\$git checkout <commit2>} + \texttt{\$git rebase <commit1>} \\
+
+\noindent Для каждого переносимого commit запустить команду (обычно тест), при ошибке произойдет откат изменения: \\
+\indent\texttt{\$git rebase -x <command> <branch>} \\
+\noindent После исправления ошибок: \\
+\indent\texttt{\$git add \ldots} \\
+\indent\texttt{\$git commit {-}-amend {-}-no-edit} \\
+
+\noindent Перенос всех commit в ветку branch из текущей ветки начинся с <commit>: \\
+\indent \texttt{\$git rebase {-}-onto <branch> <commit>}  \\
+
+\noindent Скопировать 2 последних commit: \\
+\indent \texttt{\$git cherry-pick master~2..master \indent} \\
+\noindent В master откатиться на commit назад: \\
+\indent \texttt{\$git branch -f master master~2} \\
+
+\noindent Если делали в ветке commit слияния, скопировать commit кроме commit слияния: \\
+\indent \texttt{\$git rebase {-}-rebase-merges <commit>} \\
+
+\noindent Интерактивное преобразование commit начиная с <commit>: \\
+\indent \texttt{\$git rebase -i <commit>}  \\
+\noindent Просмотр списка commit для преобразования: \\
+\indent \texttt{\$git rebase {-}-edit-todo}  \\
+
+\noindent \texttt{\$git rebase {-}-continue} \\
+\noindent \texttt{\$git rebase -i @~3} - 3 commit назад \\
+\noindent \texttt{\$git rebase {-}-no-ff}  - (no Fast Forward) - копировать все commit, а не только с первого измененного \\
+
+\noindent Внести исправления в commit: \\
+\indent \texttt{\$git commit -a {-}-fixup=<commit>}   - можно @~ - предыдущий \\
+\indent \texttt{\$git rebase -i {-}-autosquash} - сольет fixup по commit \\
+
+
 
 
 

@@ -1,4 +1,5 @@
 tex/*.aux
 tex/*.log
 tex/*.pdf
+tex/*.out
 tex/*.synctex.gz
