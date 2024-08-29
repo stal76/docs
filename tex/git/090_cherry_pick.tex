@@ -1,0 +1,15 @@
+\section{Копирование commit}
+
+\texttt{\$git cherry-pick <commit> \indent\#} - скопировать на текущую ветку \\
+\indent\texttt{-x} - добавить строку с информацией откуда скопирован commit \\
+
+\noindent Скопировать все commit из <commit2> в <commit1> с момента разделения: \\
+\indent\texttt{\$git cherry-pick <commit1>..<commit2>}\\
+
+\noindent При возникновении конфликта: \\
+\indent\texttt{\$git cherry-pick {-}-abort \indent\#} - отмена \\
+\indent\texttt{\$git cherry-pick {-}-continue \indent\#} - продолжить \\
+\indent\texttt{\$git cherry-pick {-}-quit \indent\#} - оставить только успешно скопированные \\
+
+\noindent Скопировать без создания commit \\
+\indent\texttt{\$git cherry-pick {-}-no-commit <commit>} \\

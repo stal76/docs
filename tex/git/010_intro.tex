@@ -1,0 +1,57 @@
+
+\section{Введение}
+
+\subsection{Настройки}
+
+Сохранить локальные настройки: \\
+\indent \texttt{\$git config user.name <user\_name>} \\
+\indent \texttt{\$git config user.email <user\_email>} \\
+
+\noindent Варианты настроек: \\
+\indent \texttt{\$git config {-}-system \ldots \indent \#} Системные: /etc/git/config \\
+\indent \texttt{\$git config {-}-global \ldots \indent \#} Пользователя: ~/.gitconfig \\
+\indent \texttt{\$git config {-}-local \ldots \indent \#}  Проекта (default):	<project>/.git/config \\
+
+\noindent\texttt{\$git config {-}-list \indent \#} - все конфигурационные параметры \\
+\texttt{\$git config {-}-unset user.name \indent \#} - сбросить параметр \\ 
+\texttt{\$git config {-}-remove-section user \indent \#} - удалить секцию \\ 
+\texttt{\$git config {-}-global core.editor \ldots \indent \#} редактор для commit \\
+
+\noindent Алиасы, пример: \\
+\indent\texttt{\$git config {-}-global alias.c 'config {-}-global'} \\
+\indent\texttt{\$git c {-}-list}
+
+
+\subsection{Простые команды}
+
+\texttt{\$git init \indent \#} - инициализация каталога проекта \\
+\texttt{\$git status \indent \#} - текущий статус \\
+\texttt{\$git add <file> \indent \#} - добавить файл в индекс \\
+Сделать commit:\\
+\indent\texttt{\$git commit \indent \#} - запустится редактор для ввода комментария \\
+\indent\texttt{\$git commit -m <comment>} \\
+\texttt{\$git add {-}- chmod=+x <file> \indent \#} - сделать файл исполняемым \\
+
+\noindent Специальные файлы:\\
+\indent.gitignore \indent - содержит список игнорируемых файлов \\
+\indent.gitkeep \indent - в пустых каталогах, тогда они добавляются в индекс\\
+
+\noindent\texttt{\$git reset HEAD <file> \indent \#} - убрать изменения в файле \\
+\texttt{\$git  add -f <file> \indent \#} - добавить файл из игнорируемого каталога\\
+
+
+\texttt{\$git add -p <file> \indent \#} - с вопросом по каждому изменению \\
+
+\noindent Добавление всех изменений сразу в commit:\\
+\indent \texttt{\$git commit -all \indent} \\
+\indent \texttt{\$git commit -am <comment>} \\
+\indent \texttt{\$git commit -m <comment> file1 file2 \ldots" \#} - несколько файлов \\
+
+\noindent Удалить файл: \\
+\indent \texttt{\$git rm <file> \indent \#} - удаление из каталога и индекса \\
+\indent \texttt{\$git rm -r <file> \indent \#} - удаление из каталога\\
+\indent \texttt{\$git rm {-}-cached <file> \indent \#} - удаление из индекса \\
+\indent \texttt{\$git rm -f <file> \indent \#} - удаление с несохраненными изменениями\\
+
+\noindent Переименовать файл:\\
+\indent \texttt{\$git mv <old\_name> <new\_name>}

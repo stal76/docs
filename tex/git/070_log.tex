@@ -1,0 +1,59 @@
+\section{Просмотр истории}
+
+\noindent \texttt{\$git log \indent\#} - Вывод истории commit достижимых из HEAD \\
+\noindent \texttt{\$git log {-}-pretty=<value>} \\
+\indent \texttt{medium (default)} \\
+\indent\texttt{oneline} \\
+\indent\texttt{format:'\%h \%cd | \%s\%d [\%an]' }  - id, date | comment ссылки автор \\
+\indent\indent\texttt{\%C(<colorname)\indent} - задать цвет \\
+
+
+\indent \texttt{{-}-abbrev-commit \indent\#} - обрезать id commit \\
+\noindent \texttt{\$git log {-}-oneline}  = \texttt{\$git log {-}-pretty=oneline {-}-abbrev-commit} \\
+\indent \texttt{{-}-decorate-short} \\
+\indent \texttt{{-}-date=short \indent\#} - только даты \\
+\indent \texttt{{-}-date=format:'\%F \%R' \indent\#}  - берет флаги из strftime \\
+
+\noindent \texttt{\$git log <branch> \indent\#}  - log по commit достижимым из ветки \\
+\indent \texttt{{-}-graph \indent\#} - в виде дерева \\
+\indent \texttt{{-}-all \indent\#} - из всех commit \\
+
+\noindent \texttt{\$git log gui} \\
+\noindent \texttt{\$git log feature {$ \mathbin{\char`\^} $}master \indent\#} - log по feature кроме master \\
+\noindent \texttt{\$git log master..feature} \\
+\indent \texttt{{-}-boundary \indent\#} - включая пограничный commit \\
+
+
+\noindent \texttt{\$git log ..feature} - симметрическая разница \\
+
+\noindent \texttt{\$git log <file>} - история по файлу \\
+\indent \texttt{-p} - показывать различия \\
+\indent \texttt{{-}-follow} - если был переименован, то и по старым названиям \\
+
+\noindent История между commit по списку файлов: \\
+\indent \texttt{\$git log <commit1>..<commit2> <file1> <file2> ...} \\
+
+\noindent Поиск по строке по commit достижимым из HEAD: \\
+\indent \texttt{\$git log {-}-grep <string>}\\
+\noindent \texttt{\$git log {-}-grep <str1> {-}-grep <str2> \#} - str1 или str2 в сообщении \\
+\indent \indent \texttt{{-}-all-match \indent} - по всем совпадение \\
+\indent \indent \texttt{-p \indent} - Perl type совместимые регулярные выражения \\
+\indent \indent \texttt{-F \indent} - отключить регулярные выражения \\
+\indent \indent \texttt{-i \indent} - регистро-независимый поиск \\
+
+\noindent Поиск по содержимому: \\
+\indent \texttt{\$git log -G <string>}\\
+\noindent Все изменения со строки i1 по i2 в <file>: \\
+\indent \texttt{\$git log -L i1,i2:<file>}\\
+\noindent Регулярные выражения для начала и конца фрагмента: \\
+\indent \texttt{\$git log -L r1,r2:<file> - r1,r2}\\
+\noindent Регулярное выражение <func> для имени функции: \\
+\indent \texttt{\$git log :<func>:<file>} \\
+
+\noindent \texttt{\$git log}: \\
+\indent \texttt{{-}-author} \\
+\indent \texttt{{-}-commiter} \\
+\indent \texttt{{-}-before 'before 3 months'} \\
+\indent \texttt{{-}-after} \\
+
+\noindent \texttt{\$git blame <file> \indent\#} - кто менял строки файла \\

@@ -1,0 +1,39 @@
+\section{Reset}
+
+\noindent Сброс (по умолчанию mix): \\
+\indent \texttt{\$git reset {-}-hard <commit> \indent\#} - Жесткий сброс \\
+\indent \texttt{\$git reset {-}-mix <commit> \indent\#} - Смешанный сброс \\
+\indent \texttt{\$git reset {-}-soft <commit> \indent\#} - Мягкий сброс \\
+\indent \indent 	\texttt{@ \indent} - последний commit \\
+\indent \indent 	\texttt{@\~ \indent} - предыдущий commit \\
+
+Отличия видов reset (из \texttt{\$git reset {-}{-}help}): \\
+
+\texttt {
+	\begin{tabular}{c c c c l c c c}
+		working & index & HEAD & target &  & working & index & HEAD \\
+		\hline
+		A & B & C & D & {-}{-}soft & A & B & D \\
+		&  & & & {-}{-}mixed & A & D & D \\
+		&  & & & {-}{-}hard & D & D & D \\
+	\end{tabular}
+}
+
+
+\noindent \texttt{\$git reflog master} \\
+
+\noindent Взять комментарий из другого commit: \\
+\indent \texttt{\$git commit -c <commit> \indent\#} - откроется редактор  \\
+\indent \texttt{\$git commit -C <commit> \indent\#} - не будет открываться редактор \\
+\indent \indent \texttt{ {-}-reset-author \indent} - сбросить автора (по умолчанию из commit) \\
+
+\noindent \texttt{\$git commit {-}-amend \indent\#}  - исправить в последнем commit \\
+\indent \texttt{ {-}-no-edit\indent\#} - не открывать редактор \\ 
+\indent \texttt{ {-}-reset-author} \\
+
+\noindent Очистка индекса от всех изменений: \\
+\indent \texttt{\$git reset HEAD} \\
+\noindent Удалить изменения по файлу в индексе \\
+\indent \texttt{\$git reset <file>} \\
+\noindent Поместить файл из commit в индекс (в директории не меняется):\\
+\indent \texttt{\$git reset <commit> <file>} \\

@@ -1,0 +1,56 @@
+\section{Перенос веток}
+
+Чтобы текущая ветка начиналась с последнего commit в <commit>: \\
+\indent\texttt{\$git rebase <commit>} \\
+Полностью отказаться, если были неразрешенные конфликты: \\
+\indent\texttt{\$git rebase {-}-abort} \\
+Остаться в текущем незавершенном состоянии: \\
+\indent\texttt{\$git rebase {-}-quit}  \\
+Пропустить все изменения из текущего проблемного commit и продолжить дальше: \\
+\indent\texttt{\$git rebase {-}-skip } \\
+
+
+\noindent Продолжить после разрешение конфликта: \\
+\indent\texttt{\$git rebase {-}-continue } \\
+Узнать id ветки до предыдущего состояния: \\ 
+\indent\texttt{\$cat .git/ORIG\_HEAD } \\
+Просмотр изменений по ветке: \\
+\indent\texttt{\$git reflog <branch> -1}  \\
+Просмотр информации по последнему commit: \\
+\indent\texttt{\$git show {-}-quiet <branch>{@}\{1\}} \\ 
+Вернуться на состояние последнего commit: \\
+\indent\texttt{\$git reset {-}-hard <commit>{@}\{1\}} \\ 
+
+
+\noindent\texttt{\$git rebase <commit1> <commit2>} = \\
+\indent\indent \texttt{\$git checkout <commit2>} + \texttt{\$git rebase <commit1>} \\
+
+\noindent Для каждого переносимого commit запустить команду (обычно тест), при ошибке произойдет откат изменения: \\
+\indent\texttt{\$git rebase -x <command> <branch>} \\
+\noindent После исправления ошибок: \\
+\indent\texttt{\$git add \ldots} \\
+\indent\texttt{\$git commit {-}-amend {-}-no-edit} \\
+
+\noindent Перенос всех commit в ветку branch из текущей ветки начиная с <commit>: \\
+\indent \texttt{\$git rebase {-}-onto <branch> <commit>}  \\
+
+\noindent Скопировать 2 последних commit: \\
+\indent \texttt{\$git cherry-pick master~2..master \indent} \\
+\noindent В master откатиться на commit назад: \\
+\indent \texttt{\$git branch -f master master~2} \\
+
+\noindent Если делали в ветке commit слияния, скопировать commit кроме commit слияния: \\
+\indent \texttt{\$git rebase {-}-rebase-merges <commit>} \\
+
+\noindent Интерактивное преобразование commit начиная с <commit>: \\
+\indent \texttt{\$git rebase -i <commit>}  \\
+\noindent Просмотр списка commit для преобразования: \\
+\indent \texttt{\$git rebase {-}-edit-todo}  \\
+
+\noindent \texttt{\$git rebase {-}-continue} \\
+\noindent \texttt{\$git rebase -i @~3} - 3 commit назад \\
+\noindent \texttt{\$git rebase {-}-no-ff}  - (no Fast Forward) - копировать все commit, а не только с первого измененного \\
+
+\noindent Внести исправления в commit: \\
+\indent \texttt{\$git commit -a {-}-fixup=<commit>}   - можно @~ - предыдущий \\
+\indent \texttt{\$git rebase -i {-}-autosquash} - сольет fixup по commit \\

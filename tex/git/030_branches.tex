@@ -1,0 +1,60 @@
+\section{Ветки}
+
+Работа с ветками: \\
+\indent \texttt{\$git branch -v \indent \#} - список веток с краткой информацией\\
+\indent \texttt{\$git branch <name> \indent \#} - создать новую ветку \\
+\indent \texttt{\$git checkout <name> \indent \#} - переключиться на ветку\\
+\indent \texttt{\$git checkout -b <name> \indent \#} = create + checkout \\
+
+\noindent Изменения в ветках: \\
+
+\indent \texttt{\$git stash \indent \#} - убрать все изменения и запомнить \\
+\indent \texttt{\$git stash pop \indent \#} - вернуть запомненные изменения \\
+
+\noindent Сделать новую ветку указывающую на commit:\\
+\indent \texttt{\$git branch <name> <commit>}  \\
+Передвинуть ветку на commit (или другую ветку):  \\
+\indent \texttt{\$git branch -f <name> <commit|branch>} \\ 
+\indent \texttt{\$git checkout -B <name> <commit> \indent \#}  = \texttt{git branch -f}  + \texttt{git checkout} \\
+Передвинуться на commit:\\
+\indent \texttt{\$git checkout <commit>} \\
+
+
+\noindent Cкопировать commit на текущую ветку: \\
+\indent \texttt{\$git cherry-pick <commit>}   \\
+
+\noindent Восстановить версии файлов из commit:\\
+\indent \texttt{\$git checkout <commit> <filenames>} \\
+Сбросить индекс для файла: \\
+\indent \texttt{\$git reset <file>} \\
+Вернуть файл из repository: \\
+\indent \texttt{\$git checkout HEAD <file>}  \\
+Вернуть файл из индекса: \\
+\indent \texttt{\$git checkout <file>}  \\
+
+\noindent Просмотр истории: \\
+\indent \texttt{\$git log {-}-oneline} \\
+\indent \texttt{\$git log <branch> {-}-oneline} \\
+\indent \texttt{\$git show <commit>} \\
+\indent \texttt{\$git show HEAD\~  \indent \#} - родитель commit \\
+\indent \indent \texttt{HEAD\~{}\~{}\~{} = HEAD\~{}3}  \\
+\indent \indent \texttt{HEAD = @}  \\
+
+\noindent Показать содержимое файла из commit: \\
+\indent \texttt{\$git show <commit>:<file>} \\
+\noindent Найти commit по строке: \\
+\indent \texttt{\$git show <commit>:/<string>} \\
+
+\noindent Выполнить merge master и branch, используется Fast-Forward: \\
+\indent \texttt{\$git merge <branch>} \\
+
+\noindent Продвинуть ветку: \\
+\indent \texttt{\$git branch -f <branch> <commit> \indent \#} - на commit   \\
+\indent \texttt{\$git branch -f <branch> ORIG\_HEAD \indent \#} - на предыдущий HEAD  \\
+
+\noindent Удаление ветки: \\
+\indent \texttt{\$git branch -d <branch> \indent \#} -только если объединение с текущей \\
+\indent \texttt{\$git branch -D <branch> \indent \#} - если в ней есть отличные commit \\
+
+\noindent Восстановить удаленную ветку: \\
+\indent \texttt{\$git branch <branch> <commit>} \\

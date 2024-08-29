@@ -1,0 +1,33 @@
+\section{Слияние}
+
+\noindent \texttt{\$git merge <branch> \indent\#} - объединить ветки \\
+
+\noindent При конфликте взять версию файла: \\
+\indent \texttt{\$git checkout {-}-ours <file> \indent\#} - из текущей ветки  \\
+\indent \texttt{\$git checkout {-}-theirs <file> \indent\#} - из объединяемой ветки \\
+
+\noindent \texttt{\$git checkout {-}-merge} \\
+
+\noindent Вернуть в состоянии до merge: \\
+\indent \texttt{\$git reset {-}-hard} \\
+\noindent Оставить которые хорошо объединились, проблемные вернуть в начальное состояние: \\
+\indent \texttt{\$git reset {-}-merge} \\
+
+\noindent \texttt{\$git checkout {-}-conflict-diff3 {-}-merge <file>} \\
+
+\noindent После окончания разрешения конфликтов создает окончательный commit слияния: \\
+\indent \texttt{\$git merge {-}-continue}
+
+\noindent id сливаемого commit в .git/MERGE\_HEAD \\
+
+\noindent Отмена слияния: \\
+\indent \texttt{\$git reset {-}-hard {@}\~} \\
+
+\noindent Слияние без автоматического commit: \\
+\indent \texttt{\$git merge <branch> {-}-no-commit} \\
+
+\noindent Слияние без Fast Forward (перемотки), создается новый commit: \\
+\indent \texttt{\$git merge {-}-no-ff {-}-no-edit <commit>} \\
+
+\noindent Слияние без сохранения истории сливаемого commit: \\
+\indent \texttt{\$git merge {-}-squash <commit>} \\

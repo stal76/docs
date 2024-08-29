@@ -1,0 +1,24 @@
+\section{Просмотр изменений}
+
+\noindent \texttt{\$git diff <commit1> <commit2>} \\
+\noindent \texttt{\$git diff <commit1>..<commit2>} \\
+
+\noindent Что изменилось в branch2 с момента отделение от ветки branch1: \\
+\indent \texttt{\$git diff <branch1>...<branch2>} \\
+\noindent Изменения в директории с момента последнего commit: \\
+\indent \texttt{\$git diff HEAD} \\
+\noindent \texttt{\$git diff} - Изменения по сравнению с индексом \\
+\noindent \texttt{\$git diff {-}-cached} - Изменения индекса с последним commit \\
+
+\noindent При commit в редакторе показывать изменения: \\
+\indent \texttt{\$git commit -v} \\
+\noindent Включить автоматическое отображение изменений при commit: \\
+\indent \texttt{\$git config {-}-global commit.verbose true} \\
+
+\noindent \texttt{\$git diff <file>} - Изменения в файле \\
+\noindent Только имена изменившихся файлов: \\
+\indent \texttt{\$git diff {-}-name-only <commit1> <commit2>}\\
+\noindent Сравнить разные файлы из разных commit: \\
+\indent \texttt{\$git diff <commit1>:<file1> <commit2>:<file2>} \\
+\noindent Сравнить 2 произвольных файла без привязки к git: \\
+\indent \texttt{\$git diff {-}-no-index <file1> <file2>} \\
