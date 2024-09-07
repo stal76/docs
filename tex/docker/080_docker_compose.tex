@@ -1,0 +1,34 @@
+\section{Docker Compose}
+
+Сравнение запуска docker и используя docker-compose.yaml: \\
+\begin{tabular}{| l | l |}
+	\hline
+	Docker CLI & docker-compose.yaml \\
+	\hline
+	\texttt{docker run} & \texttt{version: "3.5"} \\
+	 & \texttt{services:} \\
+	 & \texttt{\indent web-server:} \\
+	 \texttt{nginx:stable} & \texttt{\indent\indent image: nginx:stable} \\
+	 \texttt{{-}-name my\_nginx} & \texttt{\indent\indent container\_name: my\_nginx} \\
+	 & \texttt{\indent \indent volumes:} \\
+	 \texttt{-v ...:...} & \texttt{\indent \indent \indent - '/opt/web/html:/var/www/html'} \\
+	 \texttt{-v ...:...} & \texttt{\indent \indent \indent - '/opt/web/pics:/var/www/pics'} \\
+	 & \texttt{\indent \indent environment:} \\
+	 \texttt{-e ...} & \texttt{\indent \indent \indent -NGINX\_HOST=web} \\
+	 \texttt{-e ...} & \texttt{\indent \indent \indent -NGINX\_PORT=80} \\
+	 & \texttt{\indent \indent ports: } \\
+	 \texttt{-p 80:80} & \texttt{\indent \indent \indent - "80:80" } \\
+	 \texttt{-p 443:443} & \texttt{\indent \indent \indent - "443:443" } \\
+	 & \texttt{\indent \indent restart: unless-stopped \# always, on-failure } \\
+	 & \texttt{\indent \indent networks: } \\
+	 & \texttt{\indent \indent \indent default: } \\
+	 & \texttt{\indent \indent \indent \indent driver: bridge } \\
+	 \texttt{-net webnet} & \texttt{\indent \indent \indent \indent name: webnet } \\
+	\hline
+\end{tabular}
+
+\tc{\$docker compose up [-d]}{Запустить через Docker Compose:}
+\tc{\$docker compose stop}{Остановить:}
+\\
+\tc{image: <image\_name>}{Вместо:}
+\tc{build .}{Можно собирать из Dockerfile:}

@@ -1,0 +1,64 @@
+\section{Основные команды}
+
+\subsection{Общие}
+
+\noindent Создать пользователя для запуска docker: \\
+\ci{\$useradd -m -s /bin/bash <user>}
+\ci{\$usermod -uG docker <user>}
+\ci{\$su - <user>}
+
+\ccn{\$docker {-}-version}{просмотр версии docker}
+\ccn{\$docker version}{подробная информация версии docker}
+
+\ccn{\$service docker status}{проверить статус docker}
+
+\ccn{\$docker system prune -a {-}-volumes}{удалить ВСЕ данные в docker}
+
+\subsection{Образы}
+
+\ccn{\$docker pull <image>}{загрузить образ}
+\ccn{\$docker images}{список всех образов}
+\ccn{\$docker rmi <image>}{удалить образ}
+\ccn{\$docker image inspect <image>}{информация об образе}
+
+\noindent Варианты значений тэгов: latest, <version>, alpine (минимального размера) \\
+
+
+\subsection{Запуск из образов}
+
+\ccn{\$docker run <image>}{запустить образ, будет загружен если его нет}
+\ccn{\$docker run hello-world}{запустить базовый контейнер hello-world}
+\ccn{\$docker run <image> <command>}{запустить образ и в нем команду}
+
+\noindent Дополнительные параметры: \\
+\begin{tabular}{l l}
+\indent \texttt{-d} & запустить в режиме ``detach mode'' \\
+\indent \texttt{-it} & запустить интерактивно (i - interactive, t - terminal) \\
+\indent \texttt{{-}-rm} & удалить контейнер после завершения \\
+\indent \texttt{{-}-name <name>} & задать имя для нового контейнера \\
+\end{tabular}
+
+\subsection{Контейнеры}
+
+\ccn{\$docker ps}{список запущенных контейнеров}
+\ccn{\$docker ps -a}{список всех контейнеров}
+\ccn{\$docker rm <container>}{удалить контейнер}
+\ccn{\$docker container prune}{удалить все контейнеры}
+\ccn{\$docker start <container>}{запустить контейнер}
+
+\tc{\$docker exec -it <container> <command>}{Выполнить интерактивно команду в контейнере:}
+
+\ccn{\$docker pause container}{поставить на паузу}
+\ccn{\$docker unpause container}{возобновить работу}
+\ccn{\$docker stop container}{остановить работу}
+\ccn{\$docker kill container}{убить}
+
+\ccn{\$docker logs <container>}{Последние log'и контейнера}
+\ccn{\$docker logs -f <container>}{life-logs}
+
+\ccn{\$docker inspect <container>}{просмотр подробной информации}
+\ccn{\$docker container inspect <container>}{или так}
+\ccn{\$docker stats <container>}{статистика использования ресурсов}
+
+
+\tc{\$docker run -d {-}-rm {-}-name MyContainer ubuntu:20.04 echo ``Hello''}{Пример команды:}

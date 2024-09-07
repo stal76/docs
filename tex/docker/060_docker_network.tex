@@ -1,0 +1,38 @@
+\section{Docker Network}
+
+Создается default сеть типа bridge: \\
+- Сетевой интерфейс docker0 (172.17.0.1/16) \\
+- bridge docker0: 172.17.0.0/16 \\
+
+\noindent Если контейнеры в одной сети (кроме default), то они доступны по dns по именам. \\
+
+\noindent Кроме bridge возможные типы сети: \\
+\cci{{-}{-}network=host}{получают адрес хоста}
+\cci{{-}{-}network=none}{без сети}
+
+\noindent Также доступны типы сети: \\
+\cci{macvlan}{каждый контейнер получает свой mac адрес}
+\cci{ipvlan}{один и тот же mac адрес у всех контейнеров}
+\cci{overlay}{Docker Swarm Cluster}
+
+\tc{\$docker network create {-}{-}driver bridge <net>}{Создать сеть с типом Bridge:}
+\cci{\indent{-}{-}driver host}{с типом host}
+\cci{\indent{-}{-}driver none}{без сети}
+
+\tc{\$docker run {-}{-}net <net> ...}{Запустить контейнер в сети:}
+
+\ccn{\$docker network ls}{список сетей}
+\ccn{\$docker network inspect <net>}{информация о сети}
+\tc{\$docker network create -d bridge {-}{-}subnet 192.168.10.0/24 $\backslash$ \\ \indent\indent {-}{-}gateway 192.168.10.1 <net>}{Пример создания сети с заданными адресами:}
+\ccn{\$docker network rm <net>}{удалить сеть}
+
+\tc{nicolaka/netshoot}{Docker образ с установленными сетевыми инструментами:}
+
+\tc{\$docker network connect <net> <container>}{Подключить работающий контейнер к сети:}
+\tc{\$docker network disconnect <net> <container>}{Отключить от сети:}
+
+\tc{\$docker network create -d macvlan ${\backslash}$ }{Создать сеть с адресами из того же диапазона, что и сам сервер:}
+\indent\ci{{-}{-}subnet 192.168.100.0/24 {-}{-}gateway 192.168.100.1 ${\backslash}$ }
+\indent\ci{{-}{-}ip-range 192.168.100.99/32 -o parent=ens18 <net> }
+
+\tc{\$docker run ... {-}{-}ip <ip\_address> {-}{-}net <net> ...}{Присвоить фиксированный ip адрес:}

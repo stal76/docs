@@ -1,0 +1,47 @@
+\section{Создание контейнеров, Dockerfile}
+
+Структура Dockerfile: \\
+	\begin{tabular}{| l | l |}
+		\hline
+		Раздел & Пример \\
+		\hline
+		Базовый образ & \texttt{FROM ubuntu:22.04} \\
+		Описание образа & \texttt{LABEL author=...} \\
+		Команды & \texttt{RUN apt update} \\
+		  & \texttt{RUN apt install ...} \\
+		Рабочие директории & \texttt{WORKDIR <dir>} \\
+		Файлы & \texttt{COPY <src> <dst>} \\
+		& \texttt{RUN chmod +x} \\
+		Указание переменных & \texttt{END var=value} \\
+		Порты & \texttt{EXPOSE 80} \\
+		Команды при запуске контейнера & \texttt{CMD [``<cmd>'', ``<arg1>'', ...]} \\
+		& \texttt{ENTRYPOINT [``<cmd>'', ``<arg1>'', ...]} \\
+		\hline
+	\end{tabular}
+\\
+
+\noindent Пример простого Dockerfile: \\
+\ci{FROM UBUNTU:22.04}
+\ci{CMD [``echo'', ``Hello'']}
+Последнюю строку можно записать: \texttt{CMD ECHO ``Hello''} \\
+
+\tc{\$docker build <dir>}{Создать образ, в каталоге должен быть файл Dockerfile:}
+\tc{\$docker build -f <docker\_file>}{Создать образ указав путь к Dockerfile:}
+\tc{\$docker tag <image> <name>:<tag>}{Изменить имя и тэг у существующего образа:}
+\tc{\$docker build -t <name>:<tag> <dir>}{Создать образ и задать имя и тэг:}
+
+\noindent Отличия команд при запуске: \\
+\cci{ENTRYPOINT}{неизменяемая команда}
+\cci{CMD}{команда может быть изменена при запуске контейнера}
+
+\noindent Пример Dockerfile для nginx: \\
+\ci{FROM UBUNTU:22.04}
+\ci{RUN apt-get update}
+\ci{RUN apt-get install nginx -y}
+\ci{CMD [``nginx'', ``-g'', ``daemon off'']}
+
+
+\noindent Открытие портов в контейнер (EXPOSE ports: \\
+\ci{EXPOSE 80}
+\ci{EXPOSE 443/TCP}
+\tc{\$docker -P ...}{Пробросить случайные порты сервера в контейнер}

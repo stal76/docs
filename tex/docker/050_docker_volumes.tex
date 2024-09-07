@@ -1,0 +1,18 @@
+\section{Docker Volumes}
+
+\noindent\textbf{Host Volumes} \\
+\tc{\$docker run -v <dir\_server>:<dir\_container>[:ro] ...}{Монтировать фиксированный каталог сервера в каталог контейнера:}
+\indent\cci{:ro}{read-only}
+
+\noindent\textbf{Anonymous Volumes} \\
+\tc{\$docker run -v <dir\_container> ...}{Монтировать каталог сервера в каталог контейнера:}
+\tc{/var/lib/docker/volumes/<HASH>/\_data}{Каталог сервера находится в:}
+
+\noindent\textbf{Named Volumes} \\
+\tc{\$docker run -v <volume\_name>:<dir\_container> ...}{Монтировать именованный volume в каталог контейнера:}
+\tc{/var/lib/docker/volumes/<volume\_name>/\_data}{Каталог сервера находится в:}
+
+\noindent Команды управления volumes: \\
+\cci{\$docker volume ls}{Список volumes}
+\cci{\$docker volume create <volume\_name>}{Создать named volume}
+\cci{\$docker volume rm <volume\_name>}{Удалить volume}

@@ -1,0 +1,48 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{cmap}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\newcommand{\ci}[1]{\indent\texttt{#1} \\}
+\newcommand{\cn}[1]{\noindent\texttt{#1} \\}
+\newcommand{\cci}[2]{\indent\texttt{#1\indent \#} - #2 \\}
+\newcommand{\ccn}[2]{\noindent\texttt{#1\indent \#} - #2 \\}
+\newcommand{\tc}[2]{\noindent #2 \\ \indent\texttt{#1} \\}
+
+\begin{document}
+	
+	\begin{center} {\Huge Docker - справка} \end{center}
+	
+%	\noindent Составлено по материалам курса Ильи Кантора от JavaScript.ru: \\ 
+%	\indent \href{https://www.youtube.com/watch?v=W4hoc24K93E&list=PLDyvV36pndZFHXjXuwA_NywNrVQO0aQqb}
+%	{https://www.youtube.com/watch?v=W4hoc24K93E}  \\
+
+	% Основные команды
+	\input{020_main_commands.tex}
+
+	% Port mapping
+	\input{030_port_mapping.tex}
+
+	% Environment variables
+	\input{040_env_vars.tex}
+	
+	% Volumes
+	\input{050_docker_volumes.tex}
+	
+	% Network
+	\input{060_docker_network.tex}
+	
+	% Dockerfile
+	\input{070_create_containers.tex}
+	
+	\input{080_docker_compose.tex}
+
+	\input{090_docker_portainer.tex}
+		
+\end{document}
