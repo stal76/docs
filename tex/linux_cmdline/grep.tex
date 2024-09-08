@@ -1,0 +1,73 @@
+\section{grep}
+
+\ccn{\$grep his frost}{Вывести строки, содержащие «his»}
+\ccn{\$grep -w his frost}{Искать точное соответствие «his»}
+\ccn{\$grep -i his frost}{игнорировать регистр букв}
+\ccn{\$grep -l his *}{В каком файле содержится «his»?}
+
+\begin{tabular}{|p{5cm}|c|p{6cm}|}
+\hline
+\rowcolor{gray!40}
+\centering Соответствие & \makecell{Используемые \\ выражения} & \makecell{Пример} \\
+\hline
+Начало строки & \texttt{\^{}} & 
+\texttt{\^{}a} = строка, начинающаяся с a \\
+\hline
+Конец строки & \texttt{\$} & 
+\makecell{\texttt{!\$} = строка, заканчивающаяся \\ восклицательным знаком} \\
+\hline
+Любой одиночный символ (кроме новой строки) & \texttt{.} &
+\texttt{...} = любые три последовательных символа \\
+\hline
+Знаки вставки, доллара или любой другой специальный символ с &
+\texttt{${\backslash}$c} &
+\texttt{\$} = знак доллара \\
+\hline
+Ноль или более вхождений выражения E & \texttt{E*} &
+\texttt{\_*} = ноль или более знаков подчеркивания \\
+\hline
+Любой одиночный символ в наборе & \texttt{[characters]} &
+\texttt{[aeiouAEIOU]} = любая гласная \\
+\hline
+
+Любой одиночный символ, не входящий в набор &
+\texttt{[\^{}characters]}  &
+\texttt{[\^{}aeiouAEIOU]} = любая не гласная \\
+
+\hline
+
+Любой символ в диапазоне  между с1 и с2 &
+\texttt{[c1-c2]} &
+\texttt{[0-9]} = любая цифра \\
+
+\hline
+
+Любой символ вне диапазона между c1 и c2 &
+\texttt{[\^{}c1-c2]} &
+\texttt{[\^{}0-9]} = любой нецифровой символ \\
+
+\hline
+
+Любое из двух выражений E1 или E2 &
+\makecell{\texttt{E1$\backslash$|E2} \\ для grep и sed, \\ \texttt{E1/E2} для awk} &
+\texttt{one|two} = или one, или two \\
+
+\hline
+
+Группировка выражения E с учетом приоритета &
+\makecell{\texttt{$\backslash$(E$\backslash$)} \\ для grep и sed,\\ \texttt{(E)} для awk} & 
+\makecell[l]{\texttt{$\backslash$(one$\backslash$|two)$\backslash$*} \\ \texttt{(one|two)*} = ноль или более \\ вхождений one или two} \\
+
+\hline
+
+\end{tabular}
+\\ 
+
+\ccn{\$grep -v '\^{}\$' myfile}{все непустые строки, \texttt{-v} - исключает}
+\ccn{\$grep 'cookie$\backslash$|cake' myfile}{содержащие либо cookie, либо cake}
+\ccn{\$grep '<.*>' page.html}{< появляется перед символом >}
+
+\ccn{\$grep -F w. frost}{отключить регулярные выражения}
+\ccn{\$fgrep w. frost}{поиск без регулярных выражений}
+
+\tc{\$grep -f <filename> ...}{Поиск по списку шаблонов из файла:}

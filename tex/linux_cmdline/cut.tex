@@ -1,0 +1,10 @@
+\section{cut}
+
+\ccn{\$cut -f2 animals.txt}{вырезать поле в каждой строке}
+\ccn{\$cut -f1,3 animals.txt}{вырезать несколько полей}
+\ccn{\$cut -f2-4 animals.txt}{указав диапазон}
+
+\tc{\$cut -d: -f1 /etc/passwd | sort}{Вывести все имена пользователей и отсортировать их:}
+
+
+\ccn{\$cut -c1-3 animals.txt}{по положению символа в строке}

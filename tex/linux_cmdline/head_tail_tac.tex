@@ -1,0 +1,14 @@
+\section{head, tail, tac}
+
+\ccn{\$head -n3 animals.txt}{первые три строки файла}
+
+\ccn{\$tail -n3 alphabet}{последние 3 строки}
+\ccn{\$tail -n+25 alphabet}{с 25-й строки файла}
+\ccn{\$head -n4 alphabet | tail -n1}{только четвертую строку}
+\ccn{\$head -n8 alphabet | tail -n3}{строки с шестой по восьмую}
+
+\ccn{\$head -4 alphabet}{= \texttt{head -n4 alphabet}}
+\ccn{\$tail -3 alphabet}{= \texttt{tail -n3 alphabet}}
+\ccn{\$tail +25 alphabet}{= \texttt{tail -n+25 alphabet}}
+
+\ccn{\$tac filename}{вывести строки в обратном порядке}

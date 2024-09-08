@@ -1,0 +1,49 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{cmap}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{makecell}
+\usepackage[table]{xcolor}
+
+% Tables in latex
+% https://latex-tutorial.com/tables-in-latex/
+
+\newcommand{\ci}[1]{\indent\texttt{#1} \\}
+\newcommand{\cn}[1]{\noindent\texttt{#1} \\}
+\newcommand{\cci}[2]{\indent\texttt{#1\indent \#} - #2 \\}
+\newcommand{\ccn}[2]{\noindent\texttt{#1\indent \#} - #2 \\}
+\newcommand{\tc}[2]{\noindent #2 \\ \indent\texttt{#1} \\}
+
+\begin{document}
+	
+	\begin{center} {\Huge Linux command line} \end{center}
+
+	
+	\input{cut.tex}
+	\input{date.tex}
+	\input{seq.tex}
+	\input{extend_brackets}
+	\input{find.tex}
+	\input{yes.tex}
+	\input{grep.tex}
+	\input{awk_print.tex}
+	\input{head_tail_tac.tex}
+	\input{paste.tex}
+	\input{tr.tex}
+	\input{rev.tex}
+
+\section{Неразобранное}
+\noindent Полезные команды: \\
+\cci{\$cat /etc/os-release}{информация о версии системы}
+\cci{\$netstat -tulpen}{Открытые порты}
+\cci{\$curl -li https://localhost}{Содержимое сайта}
+\cci{env}{получить все системные переменные окружения}
+\cci{export <var>=<value>}{задать переменнуж окружения}
+	
+\end{document}

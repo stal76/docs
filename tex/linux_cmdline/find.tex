@@ -1,0 +1,11 @@
+\section{find}
+
+\ccn{\$find /etc -print}{Список всех каталогов в /etc рекурсивно}
+\ccn{\$find . -type f -print}{Только файлы}
+\ccn{\$find . -type d -print}{Только каталоги}
+\tc{\$find /etc -type f -name "*.conf"\ -print}{Файлы, заканчивающиеся на .conf:}
+\tc{\$find . -iname "*.txt"\ -print}{Шаблон нечувствительный к регистру:}
+
+\noindent Выполнить команду для каждого найденного файла, в конце обязательно ";"\ или экранированную ${\backslash}$; \\
+\ci{\$find /etc -exec echo @ \{\} @ ";"  }
+\ci{\$find /etc -type f -name "*.conf"\ -exec ls -l \{\} "\;"}
