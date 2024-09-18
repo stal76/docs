@@ -1,0 +1,11 @@
+\section{web}
+
+\cn{\$wget}
+\ccn{\$curl -li https://localhost}{содержимое сайта}
+
+\noindent Парсинг страницы html по классам объектов: \\
+\ci{\$curl -s https://efficientlinux.com/areacodes.html $\backslash$ }
+\ci{\indent| hxnormalize -x $\backslash$}
+\ci{\indent| hxselect -c -s@ '\#ac .ac, \#ac .state, \#ac .cities'}
+
+\cn{\$lynx -dump https://efficientlinux.com/areacodes.htm}

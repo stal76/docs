@@ -1,0 +1,77 @@
+\section{11 способов запуска команды}
+
+\subsection{Условные списки}
+\ccn{\$cd dir \&\& touch new.txt}{запускаются до первой ошибки}
+\ccn{\$cd dir || mkdir dir}{запускаются до первого успеха}
+
+\subsection{Безусловные списки}
+\tc{\$sleep 300; echo "remember to walk the dog"\ | mail -s reminder \$USER}{Последовательный запуск команд:}
+
+\subsection{Подстановка команд}
+\cn{\$mv \$(grep -l "Artist: Kansas" *.txt) kansas}
+\cn{\$echo Today is \$(date +\%A).}
+\cn{\$echo Today is \$(echo \$(date + \%A) | tr a-z A-Z )!}
+
+\subsection{Подстановка процесса}
+\cn{\$cat <(ls -1 | sort -n)}
+\cn{\$cp <(ls -1 | sort -n) /tmp/listing}
+\cn{\$diff <( ls *.jpg | sort -n ) <( seq 1 1000 | sed 's/\$/.jpg/' )}
+
+\subsection{Передача команды в bash в качестве аргумента}
+\cn{\$bash -c "ls -l"}
+\cn{\$sudo bash -c 'echo "New log file"\ > /var/log/custom.log'}
+
+\subsection{Передача команды в bash через стандартный ввод}
+\cn{\$echo "ls -l"\ | bash}
+
+\subsection{Удаленное выполнение однострочника с помощью ssh}
+\tc{\$ssh myhost.example.com ls > outfile}{Создает outfile на локальном хосте:}
+\tc{\$ssh myhost.example.com "ls > outfile"}{Создает outfile на удаленном хосте:}
+\tc{\$echo "ls > outfile" | ssh -T myhost.example}{С параметром \texttt{-T}, чтобы удаленный ssh-сервер не выделял терминал:}
+
+\subsection{Запуск списка команд с помощью xargs}
+У команды find использовать \texttt{-print0} вместо \texttt{-print}, то строки будут разделяться нулевым символом. \texttt{xargs -0} - чтобы разделителем служил нулевой символ.
+
+\cn{\$find . -type f -name $\backslash$*.py -print0 | xargs -0 wc -l}
+
+\ccn{\$ls | xargs echo}{уместить как можно больше входных строк}
+\ccn{\$ls | xargs -n1 echo}{один аргумент в каждой команде echo}
+\ccn{\$ls | xargs -n3 echo}{три аргумента в каждой команде echo}
+
+\tc{\$ls | xargs -I XYZ echo XYZ is my favorite food}{Параметр -I определяет место входных строк в сгенерированной команде. XYZ в качестве прототипа:}
+
+\cn{\$find . -maxdepth 1 -name $\backslash$*.txt -type f -print0 $\backslash$}
+\ci{| xargs -0 rm}
+
+\subsection{Фоновое выполнение команды}
+\tc{\$wc -c my\_extremely\_huge\_file.txt \&}{Подсчет символов в огромном файле:}
+\tc{\$command1 \& command2 \& command3 \&}{Все три команды выполняются фоном:}
+
+Команды управления заданиями: \\
+\begin{tabular}{|c|p{13cm}|}
+\hline
+\rowcolor{gray!40}
+Команда & Значение \\
+\hline
+bg & Переместить текущее приостановленное задание в фоновый режим \\
+bg \%n & Переместить приостановленное задание номер n в фоновый режим (пример: bg \%1) \\
+fg & Переместить текущее фоновое задание на передний план \\
+fg \%n & Переместить фоновое задание номер n на передний план (пример: fg \%2) \\
+kill \%n & Завершить фоновое задание номер n (пример: kill \%3) \\
+jobs & Просмотр списка заданий оболочки \\
+\hline
+\end{tabular}
+
+Перевести команду в фон: нажать \texttt{Ctrl-Z}, а затем \texttt{bg}.
+
+\subsection{Явные подоболочки}
+\cn{\$(cd /usr/local \&\& ls)}
+\cn{\$ cat package.tar.gz | $\backslash$}
+\ci{(mkdir -p /tmp/other \&\& cd /tmp/other \&\& tar xzvf -)}
+Копировать файлы в существующий каталог на другом хосте через SSH: \\
+\cn{\$tar czf - dir1 | ssh myhost '(cd /tmp/dir2 \&\& tar xvf -)'}
+
+\subsection{Замена процесса}
+\tc{\$exec ls}{ls заменяет дочернюю оболочку, запускается и завершает работу:}
+
+

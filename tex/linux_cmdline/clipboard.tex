@@ -1,0 +1,8 @@
+\section{Управление буфером обмена}
+\noindent Копирование и вставка из первичного буфера: \\
+\ci{\$echo -n | xclip}
+\ci{\$xclip -o}
+
+\noindent Копирование и вставка из системного буфера: \\
+\ci{\$echo https://oreilly.com | xclip -selection clipboard}
+\ci{\$xclip -selection clipboard -o}

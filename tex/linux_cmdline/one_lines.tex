@@ -1,0 +1,34 @@
+\section{Создание дерзких однострочников}
+
+Сдвинуть нумерацию файлов: \\
+\cn{\$ paste <(echo {1..10}.jpg | sed 's/ /$\backslash$n/g') $\backslash$ }
+\ci{\indent\indent <(echo {0..9}.jpg | sed 's/ /$\backslash$n/g') $\backslash$ }
+\ci{| sed 's/\^{}/mv /' $\backslash$ }
+\ci{| bash }
+
+\noindent Найти 17-й символ: \\
+\ci{\$echo \{A..Z\} | awk '\{print \$(17)\}'}
+\ci{\$echo \{A..Z\} | sed 's/ //g' | cut -c17 }
+
+\noindent Вывести названия месяцев: \\
+\ci{\$echo 2021-\{01..12\}-01 | xargs -n1 date +\%B -d}
+
+\noindent Количество символов в самом длинном имени файла: \\
+\ci{\$ls | awk '\{print "echo -n"{}, \$0, "{}| wc -c"\}' | bash $\backslash$ }
+\ci{\indent\indent | sort -nr | head -n1}
+
+\noindent Проверка совпадающих пар файлов: \\
+\ci{\$diff <(ls *.jpg | sed 's/$\backslash$.[\^{}.]*\$//') $\backslash$ }
+\ci{\indent \indent<(ls *.txt | sed 's/$\backslash$.[\^{}.]*\$//') $\backslash$ }
+\ci{\indent| grep '\^{}[<>]' $\backslash$ }
+\ci{\indent| awk '/</\{print \$2 ".jpg"\} />/\{print \$2 ".txt"\}' }
+\noindent Другой способ: \\
+\ci{\$ls -1 \$( ls *.\{jpg,txt\} $\backslash$ }
+\ci{\indent| sed 's/$\backslash$.[\^{}.]*\$//' $\backslash$ }
+\ci{\indent| uniq -c $\backslash$ }
+\ci{\indent | awk '/\^{} *1 /\{print \$2 "*"\}' ) }
+
+\noindent Создание 1000 файлов со случайными именами и случайными словами: \\
+\cn{\$ yes 'shuf -n \$RANDOM -o \$(pwgen -N1 10).txt /usr/share/dict/words' $\backslash$ }
+\ci{\indent | head -n 1000 $\backslash$ }
+\ci{\indent | bash}
