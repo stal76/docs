@@ -1,0 +1,38 @@
+\subsection{Однострочные сценарии bpftrace}
+
+\noindent Показывает, кто и что выполняет: \\
+\cn{bpftrace -e 'tracepoint:syscalls:sys\_enter\_execve \\ \indent \{ printf("\%s -> \%s$\backslash$n"{}, comm, str(args->filename)); \}' }
+
+\noindent Показывает новые процессы с аргументами: \\
+\cn{bpftrace -e 'tracepoint:syscalls:sys\_enter\_execve \\ \indent \{ join(args->argv); \}' }
+
+\noindent Показывает, какие файлы открывает каждый процесс вызовом openat(): \\
+\cn{bpftrace -e 'tracepoint:syscalls:sys\_enter\_openat \\ \indent \{ printf("\%s \%s $\backslash$n"{}, comm, str(args->filename)); \}' }
+
+\noindent Подсчитывает число системных вызовов, выполненных каждой программой: \\
+\cn{bpftrace -e 'tracepoint:raw\_syscalls:sys\_enter \\ \indent \{ @[comm] = count(); \}'}
+
+\noindent Подсчитывает число системных вызовов по их именам: \\
+\cn{bpftrace -e 'tracepoint:syscalls:sys\_enter\_* \\ \indent \{ @[probe] = count(); \}' }
+
+\noindent Подсчитывает число системных вызовов, выполненных каждым процессом: \\
+\cn{bpftrace -e 'tracepoint:raw\_syscalls:sys\_enter \\ \indent \{ @[pid, comm] = count(); \}' }
+
+\noindent Показывает общее число байтов, прочитанных каждым процессом: \\
+\cn{bpftrace -e 'tracepoint:syscalls:sys\_exit\_read /args->ret/ \\ \indent \{ @[comm] =
+	sum(args->ret); \}' }
+
+\noindent Показывает распределение размеров блоков, прочитанных каждым процессом: \\
+\cn{bpftrace -e 'tracepoint:syscalls:sys\_exit\_read \\ \indent \{ @[comm] = hist(args->ret); \}' }
+
+\noindent Показывает объемы дискового ввода/вывода для каждого процесса: \\
+\cn{bpftrace -e 'tracepoint:block:block\_rq\_issue \{ printf("\%d \%s \%d$\backslash$n"{}, \\ \indent pid, comm, args->bytes); \}{'} }
+
+\noindent Подсчитывает число страниц, загруженных каждым процессом: \\
+\cn{bpftrace -e 'software:major-faults:1 \{ @[comm] = count(); \}' }
+
+\noindent Подсчитывает число отказов страниц для каждого процесса: \\
+\cn{bpftrace -e 'software:faults:1 \{ @[comm] = count(); \}' }
+
+\noindent Профилирует стек в пространстве пользователя для PID 189 с частотой 49 Гц: \\
+\cn{bpftrace -e 'profile:hz:49 /pid == 189/ \{ @[ustack] = count(); \}' }

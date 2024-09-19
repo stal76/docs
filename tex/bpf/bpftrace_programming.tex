@@ -1,0 +1,166 @@
+\subsection{Пример программы на bpftrace}
+
+Программа измеряет время, затраченное на выполнение функции ядра vfs\_read(): \\
+
+\cn{\#!/usr/local/bin/bpftrace} \\
+\cn{kprobe:vfs\_read }
+\cn{\{ }
+\ci{	@start[tid] = nsecs; }
+\cn{\}} \\
+\cn{kretprobe:vfs\_read }
+\cn{/@start[tid]/ }
+\cn{\{ }
+\ci{	\$duration\_us = (nsecs - @start[tid]) / 1000; }
+\ci{	@us = hist(\$duration\_us); }
+\ci{	delete(@start[tid]); }
+\cn{\} }
+
+\subsection{Развернутые циклы}
+\ci{unroll (count) \{ statements \}}
+Аргумент count — это целочисленный литерал (константа) с максимально возможным значением 20. \\
+
+
+\subsection{Встроенные переменные}
+Встроенные переменные предопределены в bpftrace и обычно доступны только для
+чтения. \\
+Наиболее важные встроенные переменные в bpftrace:
+
+\begin{tabular}{|l|c|p{8cm}|}
+\hline
+\rowcolor{gray!40}
+Переменная & Тип & Описание \\
+\hline
+pid & int & Идентификатор процесса (tgid в ядре) \\
+\hline
+tid & int & Идентификатор потока (pid в ядре) \\
+\hline
+uid & int & Идентификатор пользователя \\
+\hline
+username & string & Имя пользователя \\
+\hline
+nsecs & int & Отметка времени в наносекундах \\
+\hline
+elapsed & int & Время в наносекундах, прошедшее с начала инициализации bpftrace \\
+\hline
+cpu & int & Идентификатор процессора \\
+\hline
+comm & string & Имя процесса \\
+\hline
+kstack & string & Трассировка стека в пространстве ядра \\
+\hline
+ustack & string & Трассировка стека в пространстве пользователя \\
+\hline
+arg0, ..., argN & int & Аргументы зондов некоторых типов \\
+\hline
+args & struct & Аргументы зондов некоторых типов \\
+\hline
+retval & int & Возвращаемые значения для зондов некоторых типов \\
+\hline
+func & string & Имя трассируемой функции \\
+\hline
+probe & string & Полное имя текущего зонда \\
+\hline
+curtask & int & task\_struct в ядре как 64-битное целое без знака (допускается приведение типа) \\
+\hline
+cgroup & int & Идентификатор сgroup  \\
+\hline
+\$1, ..., \$N & \makecell[c]{int \\ char*} & Позиционные параметры программы bpftrace \\
+\hline
+\end{tabular}
+
+
+\subsection{Карты}
+Формат определения: \\
+\ci{@name}
+\ci{@name[key]}
+\ci{@name[key1, key2[, ...]]}
+Примеры: \\
+\ci{@start = nsecs;}
+\ci{@last[tid] = nsecs;}
+\ci{@bytes = hist(retval);}
+\ci{@who[pid, comm] = count();}
+
+\subsection{Наиболее важные функции bpftrace}
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\rowcolor{gray!40}
+Функция & Описание \\
+\hline
+\texttt{printf(char *fmt [, ...])} & Форматированный вывод \\
+\hline
+\texttt{time(char *fmt)} & Форматированный вывод времени \\
+\hline
+\texttt{join(char *arr[])} & Выводит массив строк, объединяя их через пробел \\
+\hline
+\texttt{str(char *s [, int len])} & Возвращает строку, на которую ссылается указатель s, с необязательным ограничителем длины len  \\
+\hline
+\texttt{kstack(int limit) } & Возвращает трассировку стека ядра с глубиной до limit  \\
+\hline
+\texttt{ustack(int limit) } & Возвращает трассировку стека в пространстве пользователя с глубиной до limit \\
+\hline
+\texttt{ksym(void *p) } & Определяет символ по адресу в пространстве ядра и возвращает строку с ним  \\
+\hline
+\texttt{usym(void *p) } & Определяет символ по адресу в пространстве пользователя и возвращает строку с ним  \\
+\hline
+\texttt{kaddr(char *name) } & Определяет адрес символа в пространстве ядра  \\
+\hline
+\texttt{uaddr(char *name) } & Определяет адрес символа в пространстве пользователя  \\
+\hline
+\texttt{reg(char *name) } & Возвращает значение, хранящееся в указанном регистре  \\
+\hline
+\texttt{ntop([int af,] int addr) } & Возвращает строковое представление IP-адреса  \\
+\hline
+\texttt{system(char *fmt [, ...]) } & Выполняет команду в командной оболочке  \\
+\hline
+\texttt{cat(char *filename) } & Выводит содержимое указанного файла  \\
+\hline
+\texttt{exit() } & Завершает выполнение bpftrace  \\
+\hline
+\end{tabular}
+
+\subsection{Наиболее важные функции-карты в bpftrace}
+
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\rowcolor{gray!40}
+Функция & Описание \\
+\hline
+\texttt{count()} & Подсчитывает число вхождений \\
+\hline
+\texttt{sum(int n)} & Подсчитывает сумму значений \\
+\hline
+\texttt{avg(int n)} & Вычисляет среднее значение \\
+\hline
+\texttt{min(int n)} & Запоминает минимальное значение \\
+\hline
+\texttt{max(int n)} & Запоминает максимальное значение \\
+\hline
+\texttt{stats(int n)} & Возвращает общее количество, среднее и сумму \\
+\hline
+\texttt{hist(int n)} & Выводит гистограмму значений с шагом, равным степени двойки \\
+\hline
+\makecell[l]{\texttt{lhist(int n, int min,} \\ \texttt{\ \ int max, int step)} }  & Выводит линейную гистограмму значений  \\
+\hline
+\texttt{delete(@m[key])} & Удаляет пару ключ — значение из карты  \\
+\hline
+\texttt{print(@m [, top [, div]])} & Выводит содержимое карты с необязательными ограничением на вывод определенного числа наибольших значений и  делителем   \\
+\hline
+\texttt{clear(@m)} & Удаляет все пары ключ — значение из карты  \\
+\hline
+\texttt{zero(@m)} & Сбрасывает все значения в карте в ноль  \\
+\hline
+\end{tabular}
+
+
+\noindent Вывод частоты вхождений в течение каждого интервала: \\
+\cn{\# bpftrace -e 'tracepoint:block:block\_rq\_i* \{@[probe] = count();\}}
+\ci{\indent interval:s:1 \{ print(@); clear(@); \}' }
+
+\noindent Подсчет общего числа байтов, прочитанных системным вызовом read(2): \\
+\cn{\# bpftrace -e 'tracepoint:syscalls:sys\_exit\_read /args->ret>0/ \{}
+\ci{\indent	@bytes = sum(args->ret); \}'}
+
+\noindent Гистограммы размеров блоков, успешно прочитанных системным вызовом read(2): \\
+\cn{\# bpftrace -e 'tracepoint:syscalls:sys\_exit\_read \{@ret = hist(args->ret);\}'}
+
+

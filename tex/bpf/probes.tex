@@ -1,0 +1,179 @@
+\section{Типы зондов в bpftrace}
+
+\begin{tabular}{|l|c|p{12cm}|}
+\hline
+\rowcolor{gray!40}
+\multicolumn{2}{|c|}{Тип (Псевдоним)} & Описание \\
+\hline
+tracepoint & t & Инструментируют статические точки трассировки в ядре  \\
+\hline
+usdt & U & Инструментируют статические точки трассировки в пространстве пользователя  \\
+\hline
+kprobe & k & Инструментируют динамические точки вызовов функций ядра  \\
+\hline
+kretprobe & kr & Инструментируют динамические точки возврата из функций ядра  \\
+\hline
+uprobe & u & Инструментируют динамические точки вызовов функций в пространстве пользователя  \\
+\hline
+uretprobe & ur & Инструментируют динамические точки возврата из функций в пространстве пользователя  \\
+\hline
+software & s & Программные события в пространстве ядра  \\
+\hline
+hardware & h & Инструментируют аппаратные счетчики  \\
+\hline
+profile & p & Производят выборку по времени для всех процессоров  \\
+\hline
+interval & i & Производят выборку в течение интервала (для одного процессора)  \\
+\hline
+BEGIN & & Запуск bpftrace  \\
+\hline
+END & & Завершение bpftrace  \\
+\hline
+\end{tabular}
+
+\subsection{tracepoint}
+Зонды типа tracepoint инструментируют статические точки трассировки в ядре.
+Формат определения: \\
+\ci{tracepoint:tracepoint\_name}
+
+\noindent Страница справочного руководства: \\
+\ci{ssize\_t read(int fd, void *buf, size\_t count); }
+В точке трассировки sys\_enter\_read эти аргументы должны быть доступны как
+args-> fd, args-> buf и args->count. \\
+
+\cn{\# bpftrace -lv tracepoint:syscalls:sys\_enter\_read}
+\cn{tracepoint:syscalls:sys\_enter\_read}
+\ci{int \_\_syscall\_nr; }
+\ci{unsigned int fd; }
+\ci{char * buf; }
+\ci{size\_t count; }
+
+\subsection{usdt}
+Зонды этого типа инструментируют статические точки трассировки в пространстве
+пользователя. Формат определения: \\
+\ci{usdt:binary\_path:probe\_name}
+\ci{usdt:library\_path:probe\_name}
+\ci{usdt:binary\_path:probe\_namespace:probe\_name}
+\ci{usdt:library\_path:probe\_namespace:probe\_name}
+
+\noindent Получить список зондов, доступных в файле, можно с помощью параметра \texttt{-l}, например: \\
+\cn{\# bpftrace -l 'usdt:/usr/local/cpython/python' }
+\ci{usdt:/usr/local/cpython/python:line }
+\ci{usdt:/usr/local/cpython/python:function\_\_entry }
+\ci{usdt:/usr/local/cpython/python:function\_\_return }
+\ci{usdt:/usr/local/cpython/python:import\_\_find\_\_load\_\_start }
+\ci{usdt:/usr/local/cpython/python:import\_\_find\_\_load\_\_done }
+\ci{usdt:/usr/local/cpython/python:gc\_\_start }
+\ci{usdt:/sur/local/cpython/python:gc\_\_done }
+Можно получить и список зондов USDT в выполняющемся процессе, в этом случае
+вместо имени файла следует использовать параметр \texttt{-p PID}.
+
+\subsection{kprobe и kretprobe}
+Зонды этого типа используются для динамической инструментации ядра. Формат
+определения: \\
+\ci{kprobe:function\_name}
+\ci{kretprobe:function\_name}
+
+Зонды kprobe имеют аргументы arg0, arg1, ..., argN — входные аргументы функции,
+как целые 64-битные целые без знака. Если какой-то из них является указателем
+на структуру языка C, его можно привести к типу этой структуры.
+
+Единственный аргумент kretprobe - встроенная переменная retval - содержит 
+возвращаемое значение функции. retval всегда имеет тип uint64.
+
+\subsection{uprobe и uretprobe}
+Зонды этого типа используются для динамической инструментации кода в пространстве пользователя. Формат определения: \\
+\ci{uprobe:binary\_path:function\_name}
+\ci{uprobe:library\_path:function\_name}
+\ci{uretprobe:binary\_path:function\_name}
+\ci{uretprobe:library\_path:function\_name}
+
+\subsection{software и hardware}
+Зонды этого типа инструментируют предопределенные программные (software)
+и аппаратные (hardware) события. Формат определения: \\
+\ci{software:event\_name:count}
+\ci{software:event\_name:}
+\ci{hardware:event\_name:count}
+\ci{hardware:event\_name:}
+
+Программные события: \\
+\begin{tabular}{|l|c|c|p{8cm}|}
+\hline
+\rowcolor{gray!40}
+\multicolumn{3}{|c|}{\makecell{Имя события / Псевдоним \\ Значение счетчика по умолчанию}} & Описание \\
+\hline
+cpu-clock & cpu & $10^6$ & Фактическое время процессора \\
+\hline
+task-clock & & $10^6$ & Время использования процессора задачей 
+  (увеличивается, только когда задача выполняется на процессоре) \\
+\hline
+page-faults & faults & 100 & Отказы страниц \\
+\hline
+context-switches & cs & 1000 & Переключение контекста \\
+\hline
+cpu-migrations & & 1 & Миграция потоков процессора \\
+\hline
+minor-faults & & 100 & Незначительные отказы страниц: устранены за счет памяти \\
+\hline
+major-faults & & 1 & Значительные отказы страниц: устранены за счет
+ввода/вывода из хранилища \\
+\hline
+alignment-faults & & 1 & Ошибки выравнивания \\
+\hline
+emulation-faults & & 1 & Ошибки эмуляции \\ 
+\hline
+dummy & & 1 & Искусственное событие для тестирования \\
+\hline
+bpf-output & & 1 & Канал вывода BPF \\
+\hline
+\end{tabular}
+\\
+
+Аппаратные события: \\
+\begin{tabular}{|l|c|c|p{8cm}|}
+\hline
+\rowcolor{gray!40}
+\multicolumn{3}{|c|}{\makecell{Имя события / Псевдоним \\ Значение счетчика по умолчанию}} & Описание \\
+\hline
+
+cpu-cycles & cycles & $10^6$ & Такты процессора \\
+instructions & & $10^6$ & Инструкции процессора \\
+\hline
+cache-references & & $10^6$ & Обращения к кэшу процессора последнего уровня \\
+\hline
+cache-misses & & $10^6$ & Промахи кэша процессора последнего уровня \\
+\hline
+branch-instructions & branches & $10^5$ & Инструкции ветвления \\
+\hline
+bus-cycles & & $10^5$ & Такты шины \\
+\hline
+frontend-stalls & & $10^6$ & Пропуски циклов внешнего интерфейса процессора 
+(например, на время выборки инструкций) \\
+\hline
+backend-stalls & & $10^6$ & Пропуски внутренних циклов процессора
+(например, на время загрузки/сохранения данных) \\
+\hline
+ref-cycles & & $10^6$ & Циклы обращения к процессору (не масштабируется в турборежиме) \\
+\hline
+
+\end{tabular}
+
+
+\subsection{profile и interval}
+Зонды этого типа инструментируют события, имеющие отношение к времени. Формат определения: \\
+\ci{profile:hz:rate}
+\ci{profile:s:rate}
+\ci{profile:ms:rate}
+\ci{profile:us:rate}
+\ci{interval:s:rate}
+\ci{interval:ms:rate}
+
+Зонды profile срабатывают для всех процессоров, interval только для одного процессора.
+Во втором поле можно указать:
+\begin{itemize}
+	\item hz: герцы (событий в секунду);
+	\item s: секунды;
+	\item ms: миллисекунды;
+	\item us: микросекунды.
+\end{itemize}
+
