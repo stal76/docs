@@ -1,5 +1,12 @@
-\section{Типы зондов в bpftrace}
+\section{Зонды}
 
+Поиск зондов: \\
+\ci{\# bpftrace -l 'kprobe:vfs\_*'}
+Подробная информация о зонде: \\
+\ci{\# bpftrace -lv tracepoint:syscalls:sys\_enter\_accept}
+
+
+\textbf{Типы зондов в bpftrace:} \\
 \begin{tabular}{|l|c|p{12cm}|}
 \hline
 \rowcolor{gray!40}
@@ -96,7 +103,7 @@ args-> fd, args-> buf и args->count. \\
 \ci{hardware:event\_name:count}
 \ci{hardware:event\_name:}
 
-Программные события: \\
+\textbf{Программные события:} \\
 \begin{tabular}{|l|c|c|p{8cm}|}
 \hline
 \rowcolor{gray!40}
@@ -129,7 +136,7 @@ bpf-output & & 1 & Канал вывода BPF \\
 \end{tabular}
 \\
 
-Аппаратные события: \\
+\textbf{Аппаратные события:} \\
 \begin{tabular}{|l|c|c|p{8cm}|}
 \hline
 \rowcolor{gray!40}
