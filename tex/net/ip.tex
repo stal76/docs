@@ -1,0 +1,60 @@
+
+\subsection{Просмотр IP адресов}
+
+\cn{\$ ip a}
+\cn{\$ ip addr show}
+\ccn{\$ ip -br a show}{в кратком виде}
+\ccn{\$ ip a show enp0s3}{по одному интерфейсу}
+\ccn{\$ ip a show dev enp0s3}{по одному интерфейсу}
+\ccn{\$ ip a show dev enp0s3 permanent}{только статические}
+\ccn{\$ ip a show dev enp0s3 dynamic}{только динамические}
+
+\subsection{Добавление IP адреса}
+
+\cn{\# ip addr add <ip>/<mask> dev <device>}
+\cn{\# ip addr add 10.0.2.100/255.255.255.0 dev enp0s3}
+\cn{\# ip addr add 10.0.2.100/24 dev enp0s3}
+
+\subsection{Удаление IP адреса}
+\cn{\# ip addr del 10.0.2.100/255.255.255.0 dev enp0s3}
+\ccn{\# ip a flush}{удалить все адреса}
+\ccn{\# ip a flush to 10.0.2.0/24}{удалить адреса подсети}
+
+\subsection{Управление интерфейсами}
+\cn{\$ ip l}
+\cn{\$ ip link show}
+\tc{\# ip link set dev <device> <action>}{Включение или выключение интерфейсов:}
+\ci{\# ip link set dev enp0s3 down}
+\ci{\# ip link set dev enp0s3 up}
+\tc{\# ip link set mtu 4000 dev enp0s3}{Настройка MTU:}
+\tc{\# ip link set dev enp0s3 address AA:BB:CC:DD:EE:FF}{Настройка MAC адреса:}
+\noindent Bridges: \\
+\cci{\# ip link add <name> type bridge}{добавить brdige}
+\cci{\# ip link delete <name>}{удалить интерфейс}
+\cci{\# ip link set <name> master <bridge>}{добавить link в bridge}
+
+\subsection{Таблица ARP}
+\cn{\$ ip neigh show}
+\cn{\$ ip n}
+\tc{\# ip neigh add 192.168.0.105 lladdr b0:be:76:43:21:41 dev enp0s3}{Добавление записи в таблицу ARP:}
+\tc{\# ip neigh del dev enp0s3 192.168.0.105}{Очистка таблицы ARP:}
+\tc{\# ip neigh flush dev enp0s3}{Удалить все записи для определённого сетевого интерфейса:}
+\tc{\# ip neigh flush}{Очистить таблицу полностью:}
+
+\subsection{Таблица маршрутизации}
+\cn{\$ ip route show}
+\cn{\$ ip r}
+\tc{\# ip route add подсеть/маска via шлюз}{Добавление маршрута:}
+\ci{\# ip route add подсеть/маска dev устройство}
+\ci{\# ip route add 169.255.0.0/16 via 169.254.19.153}
+\ci{\# ip route add 169.255.0.0/16 dev enp0s3}
+\cci{\# ip route add default via 10.100.0.1}{по умолчанию}
+\tc{\# ip route del 169.255.0.0/16 via 169.254.19.153}{Удаление маршрута:}
+
+\subsection{Namespaces}
+\ccn{\# ip netns add <name>}{добавить новый namespace}
+\ccn{\# ip netns list}{список namespaces}
+\ccn{\# ip -n <name> a}{список сетевых устройств в namespace}
+\tc{\# ip -n <name> addr add 127.0.0.1/8 dev lo}{Задать адрес сетевому устройству в namespace:}
+\tc{\# ip netns exec <name> python3 -m http.server}{Запускаем http-сервер в рамках нового netns:}
+

@@ -28,38 +28,22 @@
 		\item \href{https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking}{Introduction to Linux interfaces for virtual networking}
 	\end{itemize}
 	
-	\section{Управление линками}
-	\ccn{\# ip link add <name> type <type>}{добавить link с типом type}
-	\ccn{\# ip link delete <name>}{удалить link}
-	\ccn{\# ip link set <name> [up|down]}{включить / выключить}
-	\ccn{\# ip link set <name> master <bridge>}{добавить link в bridge}
+	\section{Утилилита ip}
+	\input{ip.tex}
 
-	\section{Адреса}
-	\ccn{\# ip addr add 127.0.0.1/8 dev lo}{задать адрес}
-	
-	\section{route}
-	\tc{\# ip route add default via 10.100.0.1}{Задать маршрут по умолчанию:}
-	
 	\section{Info}
 	\ccn{\$ netstat -tulpen}{Открытые порты}
 	
-	\section{Namespaces}
-	\ccn{\# ip netns add <name>}{добавить новый namespace}
-	\ccn{\# ip netns list}{список namespaces}
-	\ccn{\# ip -n <name> a}{список сетевых устройств в namespace}
-	\tc{\# ip -n <name> addr add 127.0.0.1/8 dev lo}{Задать адрес сетевому устройству в namespace:}
-	\tc{\# ip netns exec <name> python3 -m http.server}{Запускаем http-сервер в рамках нового netns:}
-	
 	\section{System}
-	\tc{\# sysctl -w net.ipv4.ip\_forward=1}{Перенаправлять трафик между интерфейсами:}
+	\noindent Перенаправлять трафик между интерфейсами: \\
+	\cci{\# sysctl -w net.ipv4.ip\_forward=1}{ipv4}
+	\cci{\# sysctl -w net.ipv6.conf.all.forwarding=1}{ipv6}
 	\tc{\# sysctl -w net.ipv4.conf.<name>.route\_localnet=1}{Разрешает перенаправления трафика на локальные сети:}
 	
+	\section{netplan}
+	\ccn{netplan --debug generate}{}
+	\ccn{netplan --debug apply}{}
 	
-	
-	
-
 	%\tableofcontents
 	
-	%\input{basic.tex}
-
 \end{document}
