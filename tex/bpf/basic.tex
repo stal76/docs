@@ -16,6 +16,11 @@
 \noindent bpftace: \\
 \cn{sudo apt-get install bpftrace}
 
+\noindent Если при запуске bpf программ возникает ошибка: \\
+\ci{ERROR: Could not resolve symbol: /proc/self/exe:BEGIN\_trigger}
+то возможно поможет установка пакета: 
+\href{https://ubuntu.com/server/docs/debug-symbol-packages}{\texttt{bpftrace-dbgsym}} \\
+
 \noindent bcc: \\
 \cn{sudo apt-get install bpfcc-tools linux-headers-\$(uname -r) }
 
