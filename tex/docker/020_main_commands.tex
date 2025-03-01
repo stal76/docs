@@ -21,7 +21,12 @@
 \ccn{\$docker rmi <image>}{удалить образ}
 \ccn{\$docker image inspect <image>}{информация об образе}
 
-\noindent Варианты значений тэгов: latest, <version>, alpine (минимального размера) \\
+\noindent Варианты значений тэгов:\\
+\indent latest, <version>, alpine (минимального размера) \\
+
+\ccn{\$docker save <image>}{Сохранить image в tar архив}
+\ccn{\$docker load}{Загрузить image из tar архива или через stdin}
+
 
 
 \subsection{Запуск из образов}
