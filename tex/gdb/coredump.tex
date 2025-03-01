@@ -1,0 +1,25 @@
+\section{Coredump}
+
+\noindent Запуск с coredump: \\
+\indent \texttt{gdb -c <core> <exe>} \\
+
+\noindent Просмотр настроек размера coredump (нужен параметр \texttt{core file size}): \\
+\indent \texttt{ulimit -a }\\
+\noindent Установить неограниченный размер (после перезагрузки сбрасывается): \\
+\indent \texttt{ulimit -c unlimited} \\
+
+\noindent Шаблон создания coredump: \\
+\indent \texttt{/proc/sys/kernel/core\_pattern} \\
+\noindent Пример шаблона для создания в текущем каталоге: \\
+\indent \texttt{echo "core.\%e.\%p" | sudo tee /proc/sys/kernel/core\_pattern} \\
+
+
+\noindent Может потребоваться сделать настройки для сервиса apport в\\ \texttt{~/.config/apport/settings}: \\
+\indent \texttt{[main]} \\
+\indent \texttt{unpackaged=true} \\
+
+\noindent Для создания coredump может потребоваться запуск сервиса apport: \\
+\indent \texttt{sudo service apport start}
+
+\noindent Дампы могут создаваться тут: \\
+\indent \texttt{/var/crash}

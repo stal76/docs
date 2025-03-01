@@ -1,0 +1,31 @@
+\section{Запуск}
+
+\noindent Запуск программы: \\
+\indent \texttt{gdb ./exefile}
+
+\noindent Запуск без вывода длинного предупреждения в начале: \\
+\indent \texttt{gdb -silent ./exefile}
+
+\noindent Подключение к запущенному процессу по его pid: \\
+\indent \texttt{gdb ./exefile pid}
+
+\noindent Запуск с чтением coredump: \\
+\indent \texttt{gdb -c dump ./exefile}
+
+\noindent  Запуск с параметрами: \\
+\indent \texttt{gdb -{-}args ./exefile params}
+
+\noindent Установка параметров после входа в gdb: \\
+\indent \texttt{(gdb) set args params}
+
+\noindent Установка параметров с одновременным запуском: \\
+\indent \texttt{(gdb) r[un] params}
+
+\noindent Установить точки останова и другие действия через командную строку: \\
+\indent \texttt{gdb -ex 'break main' -ex 'info b' -ex 'set print pretty on' ./exefile}
+
+\noindent Запустить сервер gdb для отладки: \\
+\indent \texttt{gdbserver host:port program}
+
+\noindent Присоединиться к gdbserver: \\
+\indent \texttt{target remote host:port}

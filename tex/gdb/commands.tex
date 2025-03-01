@@ -1,0 +1,51 @@
+\section{Основные команды}
+
+\begin{tabular}{|l|l|}
+	\hline \texttt{r[un] } & Запуск на выполнение \\
+	\hline \texttt{r[un] <arg1> ...} & Запуск с параметрами \\ 
+	\hline \texttt{start} & Войти в main и остановиться \\
+	\hline \texttt{b[reak]} & Создать точку останова в текущей строке \\
+	\hline \texttt{p[rint] <var>} & Вывести значение переменной \\
+	\hline \texttt{x <addr>} & Вывести содержимое памяти по адресу \\
+	\hline \texttt{p[type] <var>} & Тип значения переменной \\
+	\hline \texttt{h[elp]} & Просмотр справки по команде \\
+	\hline \texttt{q[uit]} & Выход из программы \\
+	\hline \texttt{backtrace (bt)}  & Вывести стек вызовов \\
+	\hline \texttt{l[ist]} & Вывести код программы \\
+	\hline \texttt{f[rame]} & Вывести информацию о текущем фрейме \\  
+	\hline \texttt{thread number} & Просмотр списка потоков \\
+	\hline \texttt{telescope} &  Просмотр стека \\
+	\hline \texttt{telescope \$rsp+64} &  \\
+	\hline \texttt{attach PID} & Присоединиться к процессу \\ 
+	\hline \texttt{detach} & Отключиться от процесса \\
+	\hline
+\end{tabular} \\
+\\
+
+\begin{tabular}{|l|l|}
+	\hline \texttt{n[ext]} & Выполнить следующую строчку без захода в функцию \\	
+	\hline \texttt{n[ext] <x>} & Выполнить x строчек \\
+	\hline \texttt{s[tep]} & Выполнить следующую строчку с заходом в функцию \\
+	\hline \texttt{c[ontinue]} & Продолжить выполнение программы \\
+	\hline \texttt{finish} & Выйти из функции \\
+	\hline \texttt{u[ntil] <line> } & Продолжить выполнение до строки \\
+	\hline \texttt{u[ntil] *func+offset} & Продолжить выполнение до строки функции\\
+	\hline \texttt{u[ntil] *address} & Продолжить выполнение до адреса\\
+
+	\hline	
+\end{tabular} \\
+\\
+
+\begin{tabular}{|l|l|}
+	\hline \rowcolor{gray!40}  \multicolumn{2}{|c|}{Команды \texttt{info (i)}:} \\
+	\hline \texttt{i b[reakpoints]} & Вывести список точек останова \\
+	\hline \texttt{i lo[cals]} & Вывести значения локальных переменных \\
+	\hline \texttt{i args} & Вывести значения аргументов функции \\
+	\hline \texttt{i r[egisters]} & Вывести значения регистров \\
+	\hline \texttt{i threads} & Список потоков \\
+	\hline \texttt{i file } &Просмотреть информацию об архитектуре, секциях \\
+	\hline \texttt{i func[tions]} &  Получение списка функций \\
+	\hline \texttt{i proc mappings} & Распределение виртуальной памяти \\
+
+	\hline
+\end{tabular}

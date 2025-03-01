@@ -1,0 +1,52 @@
+\section{Точки останова}
+
+Установка точек останова:
+\begin{itemize}
+	\setlength{\itemsep}{0pt}
+	\setlength{\parskip}{0pt}
+	\item \texttt{b[reak]} - на текущей строке
+	\item \texttt{b[reak] [filename:]n} - в файле на строке n
+	\item \texttt{b [filename:]function}
+	\item \texttt{b *function+offset}
+	\item \texttt{b *address}
+	\item \texttt{f +-n} - на n строк ниже (выше)
+	\item \texttt{break arg if condition} - точка останова с условием
+	\item \texttt{condition n} newcondition
+	\item \texttt{tbreak} - разово установить точку останова
+	\item \texttt{i[nfo] breakpoints} - информация обо всех точка останова
+	\item \texttt{disable [breakpoints] [n-m]} - деактивировать точки останова
+	\item \texttt{enable [breakpoints] [n-m]} - активировать точки останова
+\end{itemize}
+
+Удаление точек останова:
+\begin{itemize}
+	\setlength{\itemsep}{0pt}
+	\setlength{\parskip}{0pt}
+	\item \texttt{clear} - удалить в текущей строке
+	\item \texttt{clear [filename:]n}
+	\item \texttt{clear [filename:]function}
+	\item \texttt{d[elete]} [breakpoints] [n-m]
+	\item \texttt{d[elete]} - удалить все точки останова
+\end{itemize}
+
+\section{Точки наблюдения}
+\begin{itemize}
+	\setlength{\itemsep}{0pt}
+	\setlength{\parskip}{0pt}
+	\item \texttt{wa[tch] expression} - остановить при изменении
+	\item \texttt{rw[atch] expression} - остановить при чтении
+	\item \texttt{aw[atch] expression} - остановить при чтении или изменении
+	\item \texttt{i[nfo] watchpoints} - вывести информацию обо всех точках наблюдения
+\end{itemize}
+
+\section{Точки перехвата (catchpoins)}
+
+\noindent Перехват C++ исключений: \\
+\indent \texttt{catch [re]throw [regex] } \\
+\indent \texttt{catch catch [regex]} \\
+\noindent Вызов системных функций: \\
+\indent \texttt{catch syscall write} \\
+\noindent Загрузка/выгрузка .so файлов: \\
+\indent \texttt{catch [un]load [regex]} \\
+\noindent Перехват сигналов: \\
+\indent \texttt{catch signal <signal>}
