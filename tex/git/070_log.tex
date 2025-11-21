@@ -1,6 +1,8 @@
 \section{Просмотр истории}
 
 \noindent \texttt{\$git log \indent\#} - Вывод истории commit достижимых из HEAD \\
+\noindent \texttt{\$git log {-}-name-only\indent\#} - Выводить имена файлов \\
+\noindent \texttt{\$git log -n <count>\indent\#} - Вывести count последних commit \\
 \noindent \texttt{\$git log {-}-pretty=<value>} \\
 \indent \texttt{medium (default)} \\
 \indent\texttt{oneline} \\
@@ -9,6 +11,15 @@
 
 
 \indent \texttt{{-}-abbrev-commit \indent\#} - обрезать id commit \\
+
+\noindent Пример вывода лога в определенном формате: \\
+\indent \texttt{\$git log {-}-reverse {-}-pretty=format:'\%Cred\%h\%Creset -\%C(yellow)\%d\%Creset \%s \%Cgreen(\%cr) \%C(bold blue)<\%an>\%Creset' {-}-abbrev-commit} \\
+
+
+\noindent Можно задать в конфигурации: \\
+\indent \texttt{\$git config format.pretty '\%Cred\%h\%Creset -\%C(yellow)\%d\%Creset \%s \%Cgreen(\%cr) \%C(bold blue)<\%an>\%Creset'} \\
+
+
 \noindent \texttt{\$git log {-}-oneline}  = \texttt{\$git log {-}-pretty=oneline {-}-abbrev-commit} \\
 \indent \texttt{{-}-decorate-short} \\
 \indent \texttt{{-}-date=short \indent\#} - только даты \\

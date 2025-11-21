@@ -1,0 +1,12 @@
+\section{Примеры}
+
+\subsection{Разбить существующий commit на несколько}
+
+Выполняем интерактивный rebase: \\
+\indent \texttt{\$git rebase -i @\~{}<n>}  - ставим e у нужного commit \\
+После этого отменяем регистрацию изменений всех файлов этого commit: \\
+\indent \texttt{\$git reset HEAD\~{}} \\
+Для каждого нового commit: \\
+\indent \texttt{\$git add <file>} \\
+\indent \texttt{\$git commit -m '...'} \\
+\indent \texttt{\$git rebase {-}-continue} \\
