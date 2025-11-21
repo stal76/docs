@@ -1,0 +1,4 @@
+https://losst.pro/shpargalka-po-tmux
+Шпаргалка по tmux
+https://linuxier.com/how-to-scroll-up-and-down-in-tmux/
+
