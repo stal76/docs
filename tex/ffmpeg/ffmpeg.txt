@@ -1,0 +1,4 @@
+Rotating videos with FFmpeg:
+	https://stackoverflow.com/questions/3937387/rotating-videos-with-ffmpeg
+Video stabilisation software:
+	https://askubuntu.com/questions/19095/video-stabilisation-software
