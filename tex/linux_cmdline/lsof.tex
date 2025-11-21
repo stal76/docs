@@ -1,0 +1,22 @@
+\subsection{lsof}
+
+Флаги запуска: \\
+\begin{tabular}{|l|p{12cm}|}
+\hline
+\texttt{-u <user>} & Файлы открытые пользователем \\ \hline
+\texttt{-u \^{}<user>} & Кроме файлов открытых пользователем \\ \hline
+\texttt{-U} & unix сокеты \\ \hline
+\texttt{-c <proc>} & Файлы открытые процессами, имена которых начинаются с proc \\ \hline
+\texttt{+d <dir>} & Файлы открытые в директории (без поддиректорий) \\ \hline
+\texttt{-d <desc>} & Задает список дескрипторов разделенных запятой. Можно задавать диапазон 0-7, можно у всех задать префикс \^{} \\ \hline
+\texttt{-d mem} & memory-mapped files \\ \hline
+\texttt{-p <pid>} & Файлы открытые процессом с заданным pid \\ \hline
+\texttt{-P} & Для сетевых файлов подавляет преобразование номеров портов в имена \\ \hline
+\texttt{-i} & Файлы, интернет-адреса которых соответствуют заданному адресу. Доступно \texttt{:[port\_number/service\_name/range]} \\ \hline
+\texttt{-i [udp/tcp]} & udp или tcp сокеты \\ \hline
+\texttt{-i [4/6]} & IPv4 или IPv6 соединения \\ \hline
+\texttt{-t [file]} & Выводить только pid процессов имеющие доступ к файлу\\ \hline
+\texttt{-a} & Все опции объединяются по правилу И \\ \hline	
+\texttt{-R} & Выводить parent pid \\ \hline
+\texttt{-b} & Avoids kernel functions that might block the command \\ \hline
+\end{tabular}

@@ -35,6 +35,15 @@
 	\input{grep.tex}
 	\input{less.tex}
 
+	\section{Информация о системе}
+	\noindent Полезные команды: \\
+	\cci{\$cat /etc/os-release}{информация о версии системы}
+	\cci{\$netstat -tulpen}{Открытые порты}
+	\cci{\$ps -uax}{все запущенные процессы для всех пользователей:}
+	
+	\input{lsof.tex}
+	\input{kernel_modules.tex}
+
 	\section{Вывод текста}
 	\input{head_tail_tac.tex}
 	\input{cut.tex}
@@ -51,13 +60,11 @@
 	\input{clipboard.tex}
 	\input{env.tex}
 	\input{web.tex}
+	\input{arch.tex}
+	
 
 
 \section{Неразобранное}
-\noindent Полезные команды: \\
-\cci{\$cat /etc/os-release}{информация о версии системы}
-\cci{\$netstat -tulpen}{Открытые порты}
-\cci{\$ps -uax}{все запущенные процессы для всех пользователей:}
 
 \noindent Код возврата: \\
 \ci{\$?}

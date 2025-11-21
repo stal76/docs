@@ -1,0 +1,58 @@
+\section{Архивирование}
+
+По материалам \href{https://losst.pro/arhivatsiya-v-linux}{отсюда}
+
+\subsection{tar}
+
+\noindent Основные опции:\\
+\indent\texttt{A} - добавить файл к архиву \\
+\indent\texttt{c} - создать архив в linux \\
+\indent\texttt{d} - сравнить файлы архива и распакованные файлы в файловой системе \\
+\indent\texttt{j} - сжать архив с помощью Bzip \\
+\indent\texttt{z} - сжать архив с помощью Gzip \\
+\indent\texttt{r} - добавить файлы в конец архива \\
+\indent\texttt{t} - показать содержимое архива \\
+\indent\texttt{u} - обновить архив относительно файловой системы \\
+\indent\texttt{x} - извлечь файлы из архива \\
+\indent\texttt{v} - показать подробную информацию о процессе работы \\
+\indent\texttt{f} - файл для записи архива \\
+\indent\texttt{-C} - распаковать в указанную папку \\
+\indent\texttt{--strip-components} - отбросить n вложенных папок \\
+
+
+\tc{\$ tar -cvf archive.tar /path/to/files}{Создать архив:}
+\tc{\$ tar -xvf archive.tar.gz}{Распаковать архив tar:}
+\tc{\$ tar -zcvf archive.tar.gz /path/to/files}{Создать сжатый архив:}
+\indent\texttt{\$ tar -zxvf archive.tar.gz}
+
+\tc{\$ tar -rvf archive.tar file.txt}{Добавить файл в архив:}
+\tc{\$ tar -xvf archive.tar file.txt}{Извлечение одного файла:}
+\tc{\$ tar -xvf archive.tar --wildcards '*.php'}{Извлечь несколько файлов по шаблону:}
+\tc{\$ tar -xvf archive.tar -C /path/to/dir}{Распаковать в нужную папку:}
+
+\subsection{Gzip}
+
+\noindent\texttt{\$ gzip опции файл} \\
+\noindent\texttt{\$ gunzip опции файл} \\
+
+\noindent Опции: \\
+\indent\texttt{-c} - выводить архив в стандартный вывод \\
+\indent\texttt{-d} - распаковать \\
+\indent\texttt{-f} - принудительно распаковывать или сжимать \\
+\indent\texttt{-l} - показать информацию об архиве \\
+\indent\texttt{-r} - рекурсивно перебирать каталоги \\
+\indent\texttt{-0} - минимальный уровень сжатия \\
+\indent\texttt{-9} - максимальный уровень сжатия \\
+
+\subsection{Zip}
+
+\noindent\texttt{\$ zip опции файлы} \\
+\noindent\texttt{\$ unzip опции архив} \\
+
+\noindent Опции: \\
+\indent\texttt{-d} - удалить файл из архива \\
+\indent\texttt{-r} - рекурсивно обходить каталоги \\
+\indent\texttt{-0} - только архивировать, без сжатия \\
+\indent\texttt{-9} - наилучший степень сжатия \\
+\indent\texttt{-F} - исправить zip файл \\
+\indent\texttt{-e} - шифровать файлы
