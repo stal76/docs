@@ -8,5 +8,17 @@
 \indent \texttt{record} \\
 \noindent После этого станут доступны следующие команды: \\
 \indent \texttt{reverse-step} \\
-\indent \texttt{reverse-next}
+\indent \texttt{reverse-next} \\
 
+\noindent Просмотр секций ELF файла: \\
+\indent \texttt{readelf -WS <exefile>} \\
+
+
+\noindent Прыгнуть на нужную строку: \\
+\indent \texttt{set \$pc = 0x4005a5} \\
+\indent \texttt{set \$pc += 10} \\
+
+
+\noindent Изменить код программы, установить NOP: \\
+\indent \texttt{set *(unsigned char*)0x5555554009b2 = 0x90} \\
+\indent \texttt{set *(unsigned char*)0x5555554009b3 = 0x90} \\
