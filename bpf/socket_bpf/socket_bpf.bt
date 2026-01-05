@@ -1,0 +1,69 @@
+#!/usr/bin/bpftrace
+
+#include <linux/socket.h>
+#include <net/af_unix.h>
+
+struct FUNC_PARAMS
+{
+	// Структура нужна для обхода возникающей ошибки:
+	//		error: <unknown>:0:0: in function tracepoint:syscalls:sys_enter_bind i64 (i8*): Looks like the BPF stack limit of 512 bytes is exceeded. Please move large on stack variables into BPF per-cpu array map.
+	// Решение было найдено тут: https://github.com/bpftrace/bpftrace/discussions/2083
+    __kernel_sa_family_t sun_family;
+    char sun_path[64];
+};
+
+BEGIN
+{
+	// @path_to_socket[0] = "test.sock";
+	// @path_to_socket[0] = "/run/yanet/dataplane.sock";
+	// @path_to_socket[0] = "/run/yanet/controlplane.sock";
+	@path_to_socket[0] = "/tmp/bird-master4.sock";
+}
+
+tracepoint:syscalls:sys_enter_bind
+{
+	$path = ((struct FUNC_PARAMS *)args->umyaddr)->sun_path;
+
+	if (strncmp($path, @path_to_socket[0], 30) == 0)
+	{
+		@socks[pid] = 1;
+		printf("%-16s[%7d] bind:     fd=%2d\n", comm, pid, args->fd);
+	}
+}
+
+tracepoint:syscalls:sys_enter_accept
+/@socks[pid]/
+{
+	printf("%-16s[%7d] accept:   fd=%2d\n", comm, pid, args->fd)
+}
+
+tracepoint:syscalls:sys_enter_recvfrom
+/@socks[pid]/
+{
+	printf("%-16s[%7d] recvfrom: fd=%2d, len=%d\n", comm, pid, args->fd, args->size);
+}
+
+tracepoint:syscalls:sys_enter_sendto
+/@socks[pid]/
+{
+	printf("%-16s[%7d] sendto:   fd=%2d, len=%d:\t%02x:%02x:%02x:%02x %02x:%02x:%02x:%02x %02x:%02x:%02x:%02x %02x:%02x:%02x:%02x\n", comm, pid, args->fd, args->len,
+			((uint8*)args->buff)[0], ((uint8*)args->buff)[1], ((uint8*)args->buff)[2], ((uint8*)args->buff)[3],
+			((uint8*)args->buff)[4], ((uint8*)args->buff)[5], ((uint8*)args->buff)[6], ((uint8*)args->buff)[7],
+			((uint8*)args->buff)[8], ((uint8*)args->buff)[9], ((uint8*)args->buff)[10], ((uint8*)args->buff)[11],
+			((uint8*)args->buff)[12], ((uint8*)args->buff)[13], ((uint8*)args->buff)[14], ((uint8*)args->buff)[15])
+}
+
+tracepoint:syscalls:sys_enter_connect
+{
+	$path = ((struct FUNC_PARAMS *)args->uservaddr)->sun_path;
+	if (strncmp($path, @path_to_socket[0], 30) == 0)
+	{
+		@socks[pid] = 1;
+		printf("%-16s[%7d] connect:  fd=%2d\n", comm, pid, args->fd);
+	}
+}
+
+END
+{
+	clear(@socks); clear(@path_to_socket);
+}
